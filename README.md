@@ -8,7 +8,7 @@ Requires FVTT version 0.1.0 or higher
 
 To install a module, follow these instructions:
 
-1. [Download the zip file]
+1. Download the zip file
 2. Extract the included folder to `public/modules` in your Foundry Virtual Tabletop installation folder.
 3. Restart Foundry Virtual Tabletop. 
 
