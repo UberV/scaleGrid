@@ -15,7 +15,11 @@ To install a module, follow these instructions:
 ## How to Use the plugin
 
 Once the plugin is loaded a new icon will appear on the main tool selection called (Get Grid)
+
+Make sure your maps current X/Y offset is set to 0 or this will not work right. (will check for this in the future and modify accordingly)
+
 Click on this then select two points on your map (preferably two corners of a square).
+
 This will then adjust the Grid Size along with the X/Y offset to try and match whats on your map.
 
 It may not be perfect but I will be close. 
