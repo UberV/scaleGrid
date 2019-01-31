@@ -1,7 +1,5 @@
 ## Grid Scaler
 
-To use the the tool, use the button available in the Actor List (for GMs only) or in the Actor Sheet header (for all players). Instructions are provided in the prompt.
-
 ## Compatibility
 
 Requires FVTT version 0.1.0 or higher
