@@ -20,7 +20,7 @@ class extendedCanvas extends Canvas {
     Hooks.on('renderSceneControls', html => {     //Here we hook onto the program rendering the SceneControls html. (Should be noted dont really know what this is doing but it worked)
       let cL = document.getElementsByClassName("scene-control active").item(0).attributes.getNamedItem("data-control").value;     //this returns an HTMLobject that we then reference to at position 0. call the attributes (which is a named node map) then get the value of the named item (data-control)
       //console.log(cL);
-      if (cL == "token") {      //Checking if the scene-control active class item is = to token.
+      if (cL == "token" && game.user.isGM) {      //Checking if the scene-control active class item is = to token.
         let ul = document.getElementsByClassName("control-tools");      //getting the current control-tools HTMLobject
         const gridButton = $('<li class="control-tool " id="get_grid" title="Get Grid" data-tool="ggrid"><i class="fas fa-square"></i></li>');     //Here we define how the button will look, I copied the existing buttons but added an ID and changed the icon.
         let findCont = $('.control-tools:last-child');      //here we find the last child in this HTMLobject
