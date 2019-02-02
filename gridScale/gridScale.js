@@ -3,58 +3,51 @@
  * @version 0.0.2
  */
 
- class GridControls extends Application {
+ class GridControls extends Application {     //This class defines the new set of buttons that we are using for this module. Pulled from foundry.js and modified to the best of my understanding.
    constructor(t) {
-     super(t),this.toolBtnIds = [["gs-closeToolbar", false],["gs-size", false],["gs-adjX", false],["gs-adjY", false]], this.tData = null,this.activeControl = "", this.controls = this.configure()
+     super(t),this.toolBtnIds = [["gs-closeToolbar", false],["gs-size", false],["gs-adjX", false],["gs-adjY", false]], this.tData = null,this.activeControl = "", this.controls = this.configure()      //Added in a class wide variable for the names of the button ids but ended up not using them. May need it in the future so leaving it in.
    console.log("**** Entered Grid Controls ****");
-   console.log(this.controls);
-   console.log(this.toolBtnIds);
-   console.log("***above is the tool ids")
-
-
    }
-   static get defaultOptions() {
+   static get defaultOptions() {      //Pulled from foundry.js - Dont fully know what it does but it allows us to define our HTML template and the ID for the HTML OL.
      const t = super.defaultOptions;
-     console.log("##### This is the super.defaultoptions")
-     console.log(t);
-     return t.id = "gridCont", t.template = "public/modules/gridScale/gridScale.html", t.popOut = !1, t
+     return t.id = "gridCont", t.template = "public/modules/gridScale/gridScale.html", t.popOut = !1, t     //Dont know what t.popout means.
    }
 
-   get activeTool() {
+   get activeTool() {     //returns the active control (in thise case there is only one control called gridC.) then the active tool (one of the four specified below)
      return this.controls[this.activeControl].activeTool
    }
-   get activeLayer() {
+   get activeLayer() {      //used to return the layer that the tool should work on. This is a left over from foundry.js that I did not want to remove incase it broke something.
      return this.controls[this.activeControl].layer
    }
-   configure() {
+   configure() {      //This configures the toolbar by specifing the (controls Ex.gridC) then the tools for that control (ex. resetGrid)
      const t = {
-       gridC: {
-         name: "Basic Grid Controls",
-         icon: "fas fa-wrench",
+       gridC: {     //this is what foundry calls a control, you have have multiple of these specified they just need to follow the layout below
+         name: "Basic Grid Controls",     //Frendly name of button (showed on mouse over?)
+         icon: "fas fa-wrench",     //This specifies the icon (font) to use. Pulled the name from the all.min.css fil foundy at \public\fonts\fontawesome\css\all.min.css
          tools: {
            resetGrid: {
-             name: "Reset Grid",
-             icon: "fas fa-window-restore"
+             name: "Reset Grid",     //Frendly name of button (showed on mouse over?)
+             icon: "fas fa-window-restore"     //This specifies the icon (font) to use. Pulled the name from the all.min.css fil foundy at \public\fonts\fontawesome\css\all.min.css
            },
            size: {
-             name: "Set GridSquare Size",
-             icon: "fas fa-compress"
+             name: "Set GridSquare Size",     //Frendly name of button (showed on mouse over?)
+             icon: "fas fa-compress"     //This specifies the icon (font) to use. Pulled the name from the all.min.css fil foundy at \public\fonts\fontawesome\css\all.min.css
            },
            adjX: {
-             name: "Adjust X",
-             icon: "fas fa-ruler-horizontal"
+             name: "Adjust X",     //Frendly name of button (showed on mouse over?)
+             icon: "fas fa-ruler-horizontal"     //This specifies the icon (font) to use. Pulled the name from the all.min.css fil foundy at \public\fonts\fontawesome\css\all.min.css
            },
            adjY: {
-             name: "Adjust Y",
-             icon: "fas fa-ruler-vertical"
+             name: "Adjust Y",     //Frendly name of button (showed on mouse over?)
+             icon: "fas fa-ruler-vertical"     //This specifies the icon (font) to use. Pulled the name from the all.min.css fil foundy at \public\fonts\fontawesome\css\all.min.css
            }
          },
-         activeTool: "placeholder"
+         activeTool: "placeholder"      //Did not want a tool to be active when the control was clicked. so i specified one that does not exist.
        }
      };
-     return t;
+     return t;      //returns our config somewhere, dont know where or what calls (called on hook?) it but it works.
    }
-   getData() {
+   getData() {      //No idea what this does, never messed with it.
      const t = {
        active: canvas && canvas.ready,
        controls: this.controls
@@ -64,65 +57,58 @@
        for (let [t, e] of Object.entries(i.tools)) e.status = i.activeTool === t ? "active" : ""
      }
      return t
-   }
+   }      //end no idea
 
-iDontKnowAnymore(f){
-  console.log("called after clicking tool button");
-  switch (f){
+iDontKnowAnymore(f){      //this switch is called after a button is pressed and is passed f (the active tool name) then picks the function to execute.
+  //console.log("called after clicking tool button");
+  switch (f){     //checking f to match one of these cases
     case "resetGrid":
-      console.log("&&^^Calling Grid Reset^^&&")
-      eCanvas.resetGrid();
-      //gC.closeButton();
+      //console.log("&&^^Calling Grid Reset^^&&")
+      eCanvas.resetGrid();    //calls resetGrid function. Which oddly enough resets the grid.
       break;
     case "size":
-      console.log("&&^^Calling Grid Size^^&&")
-        eCanvas._addListeners();
+      //console.log("&&^^Calling Grid Size^^&&")
+        eCanvas._addListeners();    //calls the add listener function which adds the mouse click/drag/up listeners to this button.
       break;
     case "adjX":
-      console.log("&&^^Calling Adjust X^^&&")
-      eCanvas._addListeners();
+      //console.log("&&^^Calling Adjust X^^&&")
+      eCanvas._addListeners();    //calls the add listener function which adds the mouse click/drag/up listeners to this button.
       break;
     case "adjY":
-      console.log("&&^^Calling Adjust Y^^&&");
-      eCanvas._addListeners();
+      //console.log("&&^^Calling Adjust Y^^&&");
+      eCanvas._addListeners();    //calls the add listener function which adds the mouse click/drag/up listeners to this button.
       break;
     default:
-      console.log("&&^^NO expression matched^^&&")
+      //console.log("&&^^NO expression matched^^&&") //rip should not get to this?
   }
 }
 
-potatoFunction(t) {
-  console.log("!!!!!!!!!!!! LOGGING POTATO !!!!!!!!!!!!!")
-  console.log(t);
+potatoFunction(t) {     //needed logging function, got potato
+  //console.log("!!!!!!!!!!!! LOGGING POTATO !!!!!!!!!!!!!")
+  //console.log(t);
 }
 
-closeButton(){
+closeButton(){      //meant this to be the function that would collapse the button stack, but I could not figure out a way to do it without breaking the button completely. Leaving here to revisit.
   console.log("*THis is the close button*")
    let mbGrid = document.getElementById("gs-gridC");
    mbGrid.className = "grid-control ";
    //this.render();
 }
 
-   activateListeners(t) {
-     //console.log("what the fuck is this")
-     //console.log(t)
+   activateListeners(t) {     //this is some magical stuff, I think this gets called after this gets rendered but dont really know. Ultimatly this is what controls the buttons and what they do.
      gC.tData = t;
      //this gets called after updating the class maybe????
      t.find(".grid-control").click(t => {
        let f =  $(t.currentTarget).hasClass("grid-control active");
-       console.log(f);
+       //console.log(f);
        let e = $(t.currentTarget).attr("data-control");
-       //console.log("Wait is this e??");
-       //console.log(e);
-       //console.log(this.activeTool);
-       //console.log(this.activeControl = e, this.render());
-       this.activeControl !== e && (this.activeControl = e, this.render())
+       this.activeControl !== e && (this.activeControl = e, this.render())    //once again, dont fully know but this renders the stack of buttons out of the main button.
      }),
-      t.find(".grid-tool").click(t => {
-       let e = $(t.currentTarget).attr("data-tool"),
+      t.find(".grid-tool").click(t => {     //returns the grid-tool that has been clicked.
+       let e = $(t.currentTarget).attr("data-tool"),      //jquery i think. Returns the current data-tools target
          i = this.controls[this.activeControl];
-       //i.activeTool = e,console.log(e),console.log(i.tools[e]), i.tools[e].onClick instanceof Function && i.tools[e].onClick(), this.render()
-       i.activeTool = e, gC.potatoFunction(e),gC.iDontKnowAnymore(e), this.render()
+       //i.activeTool = e,console.log(e),console.log(i.tools[e]), i.tools[e].onClick instanceof Function && i.tools[e].onClick(), this.render()     //original statement from foundry.js incase it was needed
+       i.activeTool = e, gC.potatoFunction(e),gC.iDontKnowAnymore(e), this.render()     //modified end statement which calls potato function and swtich to determine what to do. Dont know what exactly .render does.
      })
 
    }
@@ -146,11 +132,10 @@ class extendedCanvas extends Canvas {
     Hooks.on('renderSceneControls', html => {     //Here we hook onto the program rendering the SceneControls html. (Should be noted dont really know what this is doing but it worked)
       let cL = document.getElementsByClassName("scene-control active").item(0).attributes.getNamedItem("data-control").value;     //this returns an HTMLobject that we then reference to at position 0. call the attributes (which is a named node map) then get the value of the named item (data-control)
       //console.log(cL);
-      if (game.user.isGM) {
-        gC.render(1);
+      if (game.user.isGM) {     //if user is gm render the grid controls.
+        gC.render(1);     //once again, this is the .render function dont fully know what it does but it shows the buttons so good enough.
       }
-      //gC.enableToolbarListener();
-      /*
+      /*    this is commented out incase i want to use the old way of adding a button to an existing button stack and adding a listener. Not used anymore but may be nice to have.
       if (cL == "token" && game.user.isGM) {      //Checking if the scene-control active class item is = to token.
         let ul = document.getElementsByClassName("control-tools");      //getting the current control-tools HTMLobject
         //console.log(ul);
@@ -170,7 +155,7 @@ class extendedCanvas extends Canvas {
     });     //Ending Hooks.on
   }     //ending hookActorList function
 
-  colorFlip(btnID, t) {     //This function will flip the color of a button when passed the buttons id and return true or false if the buttons color is white (255 255 255)
+  colorFlip(btnID, t) {     //This function will flip the color of a button when passed the buttons id and return true or false if the buttons color is white (255 255 255) (not used anymore replaced by CSS)
     let btn = document.getElementById(btnID)      //setting btn = the btn given
     let btnColor = btn.style.color;     //getting the current color of the btn
     let btnOnColor = "#FFF";      //defining desired btn color
@@ -227,25 +212,25 @@ class extendedCanvas extends Canvas {
 //console.log("Mouse Down?");
 let tDI = t.data.getLocalPosition(this);
 //eCanvas.getPositionData(tDI);
-switch (gC.activeTool){
+switch (gC.activeTool){     //this switch statement checks the value of the active tool from gridControls then picks the right function on mouse click.
   case "resetGrid":
-    console.log("&&^^Calling mouse Grid Reset^^&&")
+    //console.log("&&^^Calling mouse Grid Reset^^&&")
     //console.log(tDI);
     break;
   case "size":
-    console.log("&&^^Calling mouse Grid Size^^&&")
+    //console.log("&&^^Calling mouse Grid Size^^&&")
     //console.log(tDI);
-    eCanvas.getPositionData(tDI);
+    eCanvas.getPositionData(tDI);     //calls getPositionData to set the grid square size. Mostly unchanged from last version.
     break;
   case "adjX":
-    console.log("&&^^Calling mouse Adjust X^^&&")
+    //console.log("&&^^Calling mouse Adjust X^^&&")
     //console.log(tDI);
-    eCanvas.setXOff(tDI)
+    eCanvas.setXOff(tDI)      //Broke out the xoffset from getPositionData and created a new function which does this.
     break;
   case "adjY":
-    console.log("&&^^Calling mouse Adjust Y^^&&");
+    //console.log("&&^^Calling mouse Adjust Y^^&&");
     //console.log(tDI);
-    eCanvas.setYOff(tDI);
+    eCanvas.setYOff(tDI);     //Broke out the Yoffset from getPositionData and created a new function which does this.
     break;
   default:
     console.log("&&^^NO mouse expression matched^^&&")
@@ -302,42 +287,42 @@ setOffset (s) {
       //console.log(mPoint);
       //eCanvas.colorFlip("get_grid");      //calling colorFlip to switch off/toggle the button
         eCanvas.firstX = eCanvas.firstY = eCanvas.secondX = eCanvas.secondY = null;     //nulling out the specified values.
-      if (f == true) {
-        var potato = {x: eCanvas.firstX,y: eCanvas.firstY};
-        setTimeout(function(){eCanvas.setXOff(potato); },1000);
-        setTimeout(function(){eCanvas.setYOff(potato); },1500);
+      if (f == true) {    //This is here for future work on an automatic scale/offset function. When I can get it to work right. It scales properly but offsets are wrong.
+        var potato = {x: eCanvas.firstX,y: eCanvas.firstY};     //creating an object of X/Y from first click to try and determine offset. (called functions expect object)
+        setTimeout(function(){eCanvas.setXOff(potato); },1000);     //after 1 second call setXOff
+        setTimeout(function(){eCanvas.setYOff(potato); },1500);     //after 1.5 second call setYOff
       }
     }     //ends else
   }     //ends getPositionData function
 
-setXOff(s) {
-  eCanvas._removeListeners();
+setXOff(s) {      //this function takes in a mouse click then calls getTopLeft to find the top left corner of the grid square that the click was in then gets the offset in a positive number.
+  eCanvas._removeListeners();     //removing listeners to so as to not get any more data and mess up the calculations
   //console.log("%%%%%%This is S")
-  console.log(s)
-  let curScene = game.scenes.get(canvas.scene.data._id);
-  let curOffset = curScene.data.shiftX;
-  console.log("The current X offset is = 0");
-  let closeTopL = eCanvas.getTopLeft(s.x, s.y);
+  //console.log(s)
+  let curScene = game.scenes.get(canvas.scene.data._id);      //getting current scenes ID from the canvas
+  let curOffset = curScene.data.shiftX;     //getting the current xOffset incase it is not = 0 we need to add out new offset number to it.
+  //console.log("The current X offset is = " + curOffset);
+  let closeTopL = eCanvas.getTopLeft(s.x, s.y);     //getting X/Y of grid corner
   //console.log("%%%%%%This is Close top left of clicked square.")
   //console.log(closeTopL)
-  let xOff = curOffset + Math.floor(Math.max(s.x, closeTopL[0]) - Math.min(s.x, closeTopL[0]));
-  ui.notifications.info("This is the X offset : " + xOff);
+  let xOff = curOffset + Math.floor(Math.max(s.x, closeTopL[0]) - Math.min(s.x, closeTopL[0]));     //Maths = Find the bigger of the two xnumbers and subtract the smaller one. round down and then add it to the current scene offset
+  ui.notifications.info("This is the X offset : " + xOff);      //notify user of offset.
   curScene.update({shiftX: xOff});      //this will update the current scene, this time it is the xOffset
 }
 
-setYOff(s) {
+setYOff(s) {      //this function takes in a mouse click then calls getTopLeft to find the top left corner of the grid square that the click was in then gets the offset in a positive number.
   //console.log("%%%%%%This is S")
   //console.log(s)
-  eCanvas._removeListeners();
-  let curScene = game.scenes.get(canvas.scene.data._id);
-  console.log(curScene);
-  let curOffset = curScene.data.shiftY;
-  console.log("The current Y offset is = 0");
-  let closeTopL = eCanvas.getTopLeft(s.x, s.y);
+  eCanvas._removeListeners();     //removing listeners to so as to not get any more data and mess up the calculations
+  let curScene = game.scenes.get(canvas.scene.data._id);      //getting current scenes ID from the canvas
+  //console.log(curScene);
+  let curOffset = curScene.data.shiftY;     //getting the current xOffset incase it is not = 0 we need to add out new offset number to it.
+  //console.log("The current Y offset is = " + curOffset);
+  let closeTopL = eCanvas.getTopLeft(s.x, s.y);     //getting X/Y of grid corner
   //console.log("%%%%%%This is Close top left of clicked square.")
   //console.log(closeTopL)
-  let yOff = curOffset + Math.floor(Math.max(s.y, closeTopL[1]) - Math.min(s.y, closeTopL[1]));
-  ui.notifications.info("This is the Y offset : " + yOff);
+  let yOff = curOffset + Math.floor(Math.max(s.y, closeTopL[1]) - Math.min(s.y, closeTopL[1]));    //Maths = Find the bigger of the two xnumbers and subtract the smaller one. round down and then add it to the current scene offset
+  ui.notifications.info("This is the Y offset : " + yOff);      //notify user of offset.
   curScene.update({shiftY: yOff});      //this will update the current scene, this time it is the xOffset
 }
 
