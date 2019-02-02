@@ -1,6 +1,6 @@
 /**
  * @author UberV
- * @version 0.0.1
+ * @version 0.0.2
  */
 
  class GridControls extends Application {
@@ -122,7 +122,7 @@ closeButton(){
        let e = $(t.currentTarget).attr("data-tool"),
          i = this.controls[this.activeControl];
        //i.activeTool = e,console.log(e),console.log(i.tools[e]), i.tools[e].onClick instanceof Function && i.tools[e].onClick(), this.render()
-       i.activeTool = e, console.log(e),console.log(i.tools[e]), gC.potatoFunction(e),gC.iDontKnowAnymore(e), this.render()
+       i.activeTool = e, gC.potatoFunction(e),gC.iDontKnowAnymore(e), this.render()
      })
 
    }
@@ -146,15 +146,18 @@ class extendedCanvas extends Canvas {
     Hooks.on('renderSceneControls', html => {     //Here we hook onto the program rendering the SceneControls html. (Should be noted dont really know what this is doing but it worked)
       let cL = document.getElementsByClassName("scene-control active").item(0).attributes.getNamedItem("data-control").value;     //this returns an HTMLobject that we then reference to at position 0. call the attributes (which is a named node map) then get the value of the named item (data-control)
       //console.log(cL);
-      gC.render(1);
+      if (game.user.isGM) {
+        gC.render(1);
+      }
       //gC.enableToolbarListener();
+      /*
       if (cL == "token" && game.user.isGM) {      //Checking if the scene-control active class item is = to token.
         let ul = document.getElementsByClassName("control-tools");      //getting the current control-tools HTMLobject
-        console.log(ul);
+        //console.log(ul);
         const gridButton = $('<li class="control-tool " id="get_grid" title="Get Grid" data-tool="ggrid"><i class="fas fa-square"></i></li>');     //Here we define how the button will look, I copied the existing buttons but added an ID and changed the icon.
         let findCont = $('.control-tools:last-child');      //here we find the last child in this HTMLobject
         //console.log(findCont);
-        findCont.append(gridButton);     //here we append the lockButton to the last spot in the list of buttons
+        //findCont.append(gridButton);     //here we append the lockButton to the last spot in the list of buttons
         let btnGrid = document.getElementById("get_grid")     //setting btnLock = to the elemtent of the buttons ID specified above (line 19)
         btnGrid.addEventListener("click", function() {      //adding event listener to btnGrid to check for clicks
             if (eCanvas.colorFlip("get_grid") == true) {    //Toggle button on (probably not the right way to do it) This calls a function that changes some CSS and returns true or false.
@@ -163,7 +166,7 @@ class extendedCanvas extends Canvas {
         });     //ending addEventListener
       }     //Ending the if cl= statement
       //awwww ysssss
-
+*/
     });     //Ending Hooks.on
   }     //ending hookActorList function
 
@@ -227,21 +230,21 @@ let tDI = t.data.getLocalPosition(this);
 switch (gC.activeTool){
   case "resetGrid":
     console.log("&&^^Calling mouse Grid Reset^^&&")
-    console.log(tDI);
+    //console.log(tDI);
     break;
   case "size":
     console.log("&&^^Calling mouse Grid Size^^&&")
-    console.log(tDI);
+    //console.log(tDI);
     eCanvas.getPositionData(tDI);
     break;
   case "adjX":
     console.log("&&^^Calling mouse Adjust X^^&&")
-    console.log(tDI);
+    //console.log(tDI);
     eCanvas.setXOff(tDI)
     break;
   case "adjY":
     console.log("&&^^Calling mouse Adjust Y^^&&");
-    console.log(tDI);
+    //console.log(tDI);
     eCanvas.setYOff(tDI);
     break;
   default:

@@ -2,7 +2,7 @@
   "name": "gridScale",
   "title": "Scale Grid",
   "description": "This module adds a button which when clicked in opposite corners of a grid square will set the current canvas Grid Scale and X/Y offset",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "UberV",
   "systems": ["dnd5e"],
   "scripts": ["gridScale.js"],
