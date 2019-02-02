@@ -19,20 +19,16 @@ Once the plugin is loaded a new wrench icon will appear below the main tool sele
 Click on this icon and you will be presented with four more icons.
 
 1. Reset Grid - This will set the grid to 100 pixel square with 0 X/Y offset. It also changes the grid color to pink to make it easier to see for setup.
-
-![gridReset](https://i.imgur.com/db1G0kV.gif)
+https://i.imgur.com/db1G0kV.gif
 
 2. Set GridSquare Size - This will set the grid square size when clicking twice in opposite corners of a grid square on your map. 
-
-![setGrid](https://i.imgur.com/GBSEvBC.gif)
+https://i.imgur.com/GBSEvBC.gif
 
 3. Adjust X - When this is selected it will let you move the grid along the X plane. Clicking the button then clicking on a horizontal line in one of your grid squares will adjust the grid to line up with that point.
-
-![adjustX](https://i.imgur.com/H5RcjNO.gif)
+https://i.imgur.com/H5RcjNO.gif
 
 4. Adjust Y - When this is selected it will let you move the grid along the Y plane. Clicking the button then clicking on a horizontal line in one of your grid squares will adjust the grid to line up with that point.
-
-![adjustY](https://i.imgur.com/YIDDjXU.gif)
+https://i.imgur.com/YIDDjXU.gif
 
 It may not be perfect but it will be close. 
 
