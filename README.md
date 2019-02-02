@@ -1,5 +1,7 @@
 ## Grid Scaler
 
+## !!Forgot to remove some logging, will be removed in next update!!
+
 ## Compatibility
 
 Requires FVTT version 0.1.0 or higher
