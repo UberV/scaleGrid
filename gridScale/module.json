@@ -6,6 +6,6 @@
   "author": "UberV",
   "systems": ["dnd5e"],
   "scripts": ["gridScale.js"],
-  "styles": [],
+  "styles": ["gridStyle.css"],
   "packs": []
 }
