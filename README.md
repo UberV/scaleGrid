@@ -14,30 +14,37 @@ To install a module, follow these instructions:
 
 Once the plugin is loaded a new wrench icon will appear below the main tool selection.
 
-Click on this icon and you will be presented with four more icons.
+Click on this icon and you will be presented with five more icons. (Imgur Album - https://imgur.com/a/zyBWI0M)
 
 1. Reset Grid - This will set the grid to 100 pixel square with 0 X/Y offset. It also changes the grid color to pink to make it easier to see for setup.
-https://i.imgur.com/db1G0kV.gif
+![Reset Grid](https://i.imgur.com/TYYH8KP.gif)
 
-2. Set GridSquare Size - This will set the grid square size when clicking twice in opposite corners of a grid square on your map. 
-https://i.imgur.com/GBSEvBC.gif
+2. Auto Adjust Grid - This will let you draw a square on the map then have the grid size and X/Y offsets set to match the drawn square.
+![Auto Adjust Grid](https://i.imgur.com/tbM3zGl.gif)
 
-3. Adjust X - When this is selected it will let you move the grid along the X plane. Clicking the button then clicking on a horizontal line in one of your grid squares will adjust the grid to line up with that point.
-https://i.imgur.com/H5RcjNO.gif
+3. Set GridSquare Size - This will let you draw a square on the map then have the grid size set to match the drawn square. No offset is applied with this and should be applied manually.
+![Adjust Grid](https://i.imgur.com/6SaU3Yo.gif)
 
-4. Adjust Y - When this is selected it will let you move the grid along the Y plane. Clicking the button then clicking on a horizontal line in one of your grid squares will adjust the grid to line up with that point.
-https://i.imgur.com/YIDDjXU.gif
+4. Adjust X - When this is selected it will let you move the grid along the X plane. Clicking the button then clicking on a horizontal line in one of your grid squares will adjust the grid to line up with that point.
+![Adjust X](https://i.imgur.com/4t38xiM.gif)
+
+5. Adjust Y - When this is selected it will let you move the grid along the Y plane. Clicking the button then clicking on a horizontal line in one of your grid squares will adjust the grid to line up with that point.
+![Adjust Y](https://i.imgur.com/M6C53oa.gif)
+
 
 It may not be perfect but it will be close. 
 
 ### Features in planning (maybe?)
 
-1. Instead of clicking on two point, actually draw a square on the canvas then use that as reference points. Would make it easier for maps with no pre-existing grid lines.
-2. Create a new Menu button which will put this tool and the following idea in their own space. (kinda working)
-3. Create an X/Y adjustment button which will take a reference click and move the grid to the click in the requested axis. (done!)
-4. Add better points of reference for clicks (or #1 on this list).
+1. Create a new Menu button which will put this tool and the following idea in their own space. (kinda working)
+2. Add better points of reference for clicks (On hold util feedback about the drawn grid square is in.).
 
-### Changes in this version - 0.0.2
+### Changes in version - 0.0.3
+
+1. Setup the ability for users to draw a square and have the grid set to its size, then depening on tool selection either apply X/Y offsets or not.
+2. Removed the two click set grid square button and replaced its function with a drawn square with no offset applied.
+
+### Changes in version - 0.0.2
 
 1. Disabled the complete auto button from the original code. Found that while it kinda worked, it also kinda did not. So I split the functions out into separate buttons until the full auto thing can be figured out.
 2. Added a new button structure under the existing controls menu. 
