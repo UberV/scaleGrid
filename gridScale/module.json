@@ -1,11 +1,11 @@
 {
   "name": "gridScale",
-  "title": "Scale Grid",
-  "description": "This module adds a set of buttons which will let you modify Grid Scale and X/Y offset",
-  "version": "0.0.3",
+  "title": "Grid Scale Menu",
+  "description": "This should add some buttons to modify square grids to the canvas",
+  "version": "0.0.4",
   "author": "UberV",
   "systems": ["dnd5e"],
-  "scripts": ["gridScale.js"],
-  "styles": ["gridStyle.css"],
+  "scripts": ["./gridScale.js"],
+  "styles": ["./gridScale.css"],
   "packs": []
 }
