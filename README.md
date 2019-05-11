@@ -19,7 +19,7 @@ Click on this icon and you will be presented with five more icons. (Imgur Album 
 1. Reset Grid - This will set the grid to 100 pixel square with 0 X/Y offset. It also changes the grid color to pink to make it easier to see for setup.
 ![Reset Grid](https://i.imgur.com/TYYH8KP.gif)
 
-2. Auto Adjust Grid - **Currently Disabled due to issues** This will let you draw a square on the map then have the grid size and X/Y offsets set to match the drawn square.
+2. Auto Adjust Grid - **||Currently Disabled due to issues||** This will let you draw a square on the map then have the grid size and X/Y offsets set to match the drawn square.
 ![Auto Adjust Grid](https://i.imgur.com/tbM3zGl.gif)
 
 3. Set GridSquare Size - This will let you draw a square on the map then have the grid size set to match the drawn square. No offset is applied with this and should be applied manually.
