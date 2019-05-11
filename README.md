@@ -19,7 +19,7 @@ Click on this icon and you will be presented with five more icons. (Imgur Album 
 1. Reset Grid - This will set the grid to 100 pixel square with 0 X/Y offset. It also changes the grid color to pink to make it easier to see for setup.
 ![Reset Grid](https://i.imgur.com/TYYH8KP.gif)
 
-2. Auto Adjust Grid - This will let you draw a square on the map then have the grid size and X/Y offsets set to match the drawn square.
+2. Auto Adjust Grid - **Currently Disabled due to issues** This will let you draw a square on the map then have the grid size and X/Y offsets set to match the drawn square.
 ![Auto Adjust Grid](https://i.imgur.com/tbM3zGl.gif)
 
 3. Set GridSquare Size - This will let you draw a square on the map then have the grid size set to match the drawn square. No offset is applied with this and should be applied manually.
@@ -36,8 +36,17 @@ It may not be perfect but it will be close.
 
 ### Features in planning (maybe?)
 
-1. Create a new Menu button which will put this tool and the following idea in their own space. (kinda working)
-2. Add better points of reference for clicks (On hold util feedback about the drawn grid square is in.).
+1. Fix auto-grid - Need to figure out how to deal with the scenes size changing when grid sizes change as this throws off the original click location.
+
+### Changes in version - 0.0.5
+
+1. Removed auto-grid due to issues with click points changing when the scene gets updated and throwing off the calculations. Needs more calibration.
+2. Changed the Adjust X/Y buttons to work with both positive and negitive values so the map/grid does not end up in a far corner somewhere.
+3. Added a check for drawn grids being smaller than 50px. If smaller nothing happens, but if it is larger then a number shows up indicating grid square size.
+
+### Changes in version - 0.0.4
+
+1. Updated plugin to  work with foundry 2.8, now no longer on its own canvas. No Idea why I was doing it that way anyway.
 
 ### Changes in version - 0.0.3
 
