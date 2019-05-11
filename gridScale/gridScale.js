@@ -135,6 +135,8 @@ class DrawingLayer extends CanvasLayer {
     this.select = null;
     let isActive = false;
     this.drawChild = null;    //a variable not used
+    this.drawText = null; // used but not finished yet
+    let textSample = null
     let drawChildBackup = null;
     let drawSquare = false;
     let dataCoords = null;      //variable to store the first clicks x coord
@@ -158,10 +160,12 @@ class DrawingLayer extends CanvasLayer {
     t["gridC"]["tools"]["resetGrid"]["name"] = "Reset Grid";
     t["gridC"]["tools"]["resetGrid"]["icon"] = "fas fa-window-restore";
     t["gridC"]["tools"]["resetGrid"]["prog"] = dL.resetGrid;    //dont need to user () after function for this?
+    /*
     t["gridC"]["tools"]["aGrid"] = {};
     t["gridC"]["tools"]["aGrid"]["name"] = "Auto Draw Grid";
     t["gridC"]["tools"]["aGrid"]["icon"] = "fas fa-square";
     t["gridC"]["tools"]["aGrid"]["prog"] = dL.callAGrid;    //dont need to user () after function for this?
+    */
     t["gridC"]["tools"]["size"] = {};
     t["gridC"]["tools"]["size"]["name"] = "Draw Grid";
     t["gridC"]["tools"]["size"]["icon"] = "fas fa-compress";
@@ -175,6 +179,29 @@ class DrawingLayer extends CanvasLayer {
     t["gridC"]["tools"]["adjY"]["icon"] = "fas fa-ruler-vertical";
     t["gridC"]["tools"]["adjY"]["prog"] = dL._addListeners;   //dont need to user () after function for this?
     t["gridC"]["activeTool"] = ""
+    /*
+    t["testing"] = {};
+    t["testing"]["name"] = "Testing Grid Controls";
+    t["testing"]["icon"] = "fas fa-bullseye"
+    t["testing"]["tools"] = {};
+    t["testing"]["tools"]["adjXT"] = {};
+    t["testing"]["tools"]["adjXT"]["name"] = "Adjust X";
+    t["testing"]["tools"]["adjXT"]["icon"] = "fas fa-ruler-horizontal";
+    t["testing"]["tools"]["adjXT"]["prog"] = dL._addListeners;     //dont need to user () after function for this?
+    t["testing"]["tools"]["adjYT"] = {};
+    t["testing"]["tools"]["adjYT"]["name"] = "Adjust Y";
+    t["testing"]["tools"]["adjYT"]["icon"] = "fas fa-ruler-vertical";
+    t["testing"]["tools"]["adjYT"]["prog"] = dL._addListeners;   //dont need to user () after function for this?
+    t["testing"]["tools"]["mkTXT"] = {};
+    t["testing"]["tools"]["mkTXT"]["name"] = "Add Text";
+    t["testing"]["tools"]["mkTXT"]["icon"] = "fas fa-ruler-vertical";
+    t["testing"]["tools"]["mkTXT"]["prog"] = dL.drawSomeText;   //dont need to user () after function for this?
+    t["testing"]["tools"]["rmTXT"] = {};
+    t["testing"]["tools"]["rmTXT"]["name"] = "Remove Text";
+    t["testing"]["tools"]["rmTXT"]["icon"] = "fas fa-ruler-vertical";
+    t["testing"]["tools"]["rmTXT"]["prog"] = dL.removeSomeText;   //dont need to user () after function for this?
+    t["testing"]["activeTool"] = ""
+    */
     console.log("Grid Scale | Drawing Layer | Menu Buttons Updated")
     //console.log(t);
     cB.configure();
@@ -194,6 +221,28 @@ class DrawingLayer extends CanvasLayer {
         return [x,y]
       }
 
+      drawSomeText(t,s){    // This function sets up  the  Pixi text  container and styling.
+        let style = new PIXI.TextStyle({      //this  here defines the style of  the text being displayed.  Can be changed later  at runtime if needed.
+              dropShadow: true,
+              dropShadowDistance: 1,
+              fill: "#4bf02a",
+              fontSize: 40,
+              lineJoin: "round",
+              strokeThickness: 4
+            });
+
+        dL.textSample = new PIXI.Text("I  cant  be null", style);     //this defines our PIXIchild, we have  to  give it something to display or warnings show up.  Also at this stage style is applied.
+        dL.textSample.x = 750;    //set initial canvas placement
+        dL.textSample.y = 750;    //set initial canvas placement
+        dL.textSample.anchor.set(0.5);    //this sets the text to be  in the middle  of the point we  specify. Otherwise it is placed to the  right of the specified point.
+        dL.textSample.visible = false;    //Set visible  to  false  so someone dosent see the I cant be null message. Cause that would be awkward.
+
+        canvas.controls.addChild(dL.textSample);   //finially apply the pixi object as a child to the controls layer of the canvas.
+      }
+
+      removeSomeText(){
+        canvas.controls.removeChild(dL.textSample);
+      }
 
       getNearestCenter(t, e) {       //from foundry.js = I think this reutrns the coords of the grid square center that contains the given x/y coords.
         const i = canvas.dimensions.size;
@@ -234,11 +283,19 @@ class DrawingLayer extends CanvasLayer {
       case "resetGrid":
         break;
       case "adjX":
-        dL.setXOff(tDI)      //Broke out the xoffset from getPositionData and created a new function which does this.
+        dL.newsetXOff(tDI);      //Broke out the xoffset from getPositionData and created a new function which does this.
         break;
       case "adjY":
-        dL.setYOff(tDI);     //Broke out the Yoffset from getPositionData and created a new function which does this.
-        break;
+        dL.newsetYOff(tDI);     //Broke out the Yoffset from getPositionData and created a new function which does this.
+      break;
+      /*
+      case "adjXT":
+        dL.newsetXOff(tDI);     //Broke out the Yoffset from getPositionData and created a new function which does this.
+      break;
+      case "adjYT":
+        dL.newsetYOff(tDI);     //Broke out the Yoffset from getPositionData and created a new function which does this.
+      break;
+      */
       case "size":
       case "aGrid":     //this switch is used to add the mousemove listener for drawing the grid square
         dL._addMoveListener();
@@ -295,7 +352,7 @@ class DrawingLayer extends CanvasLayer {
     }
 
       _onMouseUp(t) {          //Used after finishing drawing the square.
-    console.log("Mouse Up?")
+    //console.log("Mouse Up?")
     let tDI = t.data.getLocalPosition(this);
     if (dL.needsDrawn == true) {      //this triggers after finishing drawing the square. Resets some things, clears the square and switches back on the game listeners.
         //dL.needsDrawn = false, cB.currentTool = null, dL.drawChild.clear(), dL.enableGameListeners() ,dL.setGrid();
@@ -377,6 +434,73 @@ class DrawingLayer extends CanvasLayer {
       curScene.update({shiftY: yOff});      //this will update the current scene, this time it is the xOffset
     }
 
+    newsetXOff(s) {      //this function takes in a mouse click then calls getTopLeft to find the top left corner of the grid square that the click was in then gets the offset in a positive number.
+                        // Added the logic so it wont constantly shift in the positive direction. Instead finds the closest side the clicked point and will move the grid in either + or - to get there.
+
+      dL._removeListeners();     //removing listeners to so as to not get any more data and mess up the calculations
+      //console.log("%%%%%%This is S")
+      //console.log(s)
+      let curScene = game.scenes.get(canvas.scene.data._id);      //getting current scenes ID from the canvas
+      let curGrid = curScene.data.grid;      //getting current grid size from the canvas
+      let curOffset = curScene.data.shiftX;     //getting the current xOffset incase it is not = 0 we need to add out new offset number to it.
+      //console.log("The current X offset is = " + curOffset);
+      let closeTopL = dL.getTopLeft(s.x, s.y);     //getting X/Y of grid corner
+      let oppX = closeTopL[0] + curGrid;
+      let sG = s.x + curGrid;
+      let absTopL = Math.abs(closeTopL[0] - s.x);
+      let absTopR = Math.abs(oppX - s.x);
+
+      if (absTopL > absTopR) {
+        let xOff = curOffset - Math.floor(absTopR);     //Maths = Find the bigger of the two xnumbers and subtract the smaller one. round down and then add it to the current scene offset
+        //console.log("&& xOff is " + xOff);
+        curScene.update({shiftX: xOff});      //this will update the current scene, this time it is the xOffset
+      } else {
+        //console.log("is closer to left side of square");
+        let xOff = curOffset + Math.floor(absTopL);     //Maths = Find the bigger of the two xnumbers and subtract the smaller one. round down and then add it to the current scene offset
+        //console.log("&& xOff is " + xOff);
+        curScene.update({shiftX: xOff});      //this will update the current scene, this time it is the xOffset
+      }
+
+
+    }
+
+    newsetYOff(s) {      //this function takes in a mouse click then calls getTopLeft to find the top left corner of the grid square that the click was in then gets the offset in a positive number.
+                        // Added the logic so it wont constantly shift in the positive direction. Instead finds the closest side the clicked point and will move the grid in either + or - to get it right.
+
+      //console.log("%%%%%%This is S")
+      //console.log(s)
+      dL._removeListeners();     //removing listeners to so as to not get any more data and mess up the calculations
+      let curScene = game.scenes.get(canvas.scene.data._id);      //getting current scenes ID from the canvas
+      //console.log(curScene);
+      let curGrid = curScene.data.grid;      //getting current grid size from the canvas
+      let curOffset = curScene.data.shiftY;     //getting the current xOffset incase it is not = 0 we need to add out new offset number to it.
+      //console.log("The current Y offset is = " + curOffset);
+      let closeTopL = dL.getTopLeft(s.x, s.y);     //getting X/Y of grid corner
+      let oppY = closeTopL[1] + curGrid;
+      let sG = s.y + curGrid;
+      let absTop = Math.abs(closeTopL[1] - s.y);
+      let absBot = Math.abs(oppY - s.y);
+
+      if (absTop < absBot) {
+        //console.log("Is closer to top of square");
+        let yOff = curOffset + Math.floor(absTop);     //Maths = Find the bigger of the two xnumbers and subtract the smaller one. round down and then add it to the current scene offset
+        //console.log("&& yOff is " + yOff);
+        curScene.update({shiftY: yOff});      //this will update the current scene, this time it is the xOffset
+      } else {
+        //console.log("is closer to bottom of square");
+        let yOff = curOffset - Math.floor(absBot);     //Maths = Find the bigger of the two xnumbers and subtract the smaller one. round down and then add it to the current scene offset
+        //console.log("&& yOff is " + yOff);
+        curScene.update({shiftY: yOff});      //this will update the current scene, this time it is the xOffset
+      }
+
+    }
+
+
+
+
+
+
+
     resetGrid(){      //this function resets the grid to a 100px grid with 0 X/Y Offset, also sets the grid color to pink to make it easier to work with.
       dL._removeListeners();
       console.log("Grid Scale | Drawing Layer | ^^^^^ Resetting Grid ^^^^^");
@@ -406,7 +530,15 @@ class DrawingLayer extends CanvasLayer {
 
     drawBox(t) {      //this draws the box requested using pixi graphics. first it clears the previous square then sets fill color and line style then draws the new one from the given coords.
     //console.log(dL.drawChild, "this is drawbox drawchild before")
-      this.drawChild.clear().beginFill(0x208000, 0.3).lineStyle(6, 0x66ff33, .9, 0).drawRect(...t);
+    //console.log(t);
+      this.drawChild.clear().beginFill(0x208000, 0.3).lineStyle(1, 0x66ff33, .9, 0).drawRect(...t);
+      if ( t[3] > 50 ) {
+      this.textSample.visible = true;
+      this.textSample.x = t[0]+(t[3]/2);
+      this.textSample.y = t[1]+(t[3]/2);
+      this.textSample.text  =  Math.floor(t[3]);
+    } else {this.textSample.visible = false;}
+      //this.drawText.text("what how do?",{fontFamily : 'Arial', fontSize: 24, fill : 0xff1010, align : 'center'});
       //this.drawChild.lineStyle(3, 0xFF9829, 0.9).drawRect(...t);
     //console.log(dL.drawChild, "this is drawbox drawchild after")
     }
@@ -417,8 +549,13 @@ class DrawingLayer extends CanvasLayer {
         dL.preGridScale = [adjX1, adjY1];           //needed for adjustment of x/y later.
         let curScene = game.scenes.get(canvas.scene.data._id);     //This gets the scene object for the current scene by asking the canvas for the current scenes ID then reutrning that to the game.scenes.get
         let gridPix = Math.floor(dL.dataCoords[3]);      //getting the grid pixel size
+        if (gridPix >= 50) {
         curScene.update({grid: gridPix});      //this will update the current scene, this time it is the grid square size
         ui.notifications.info("This is the Grid Size : " + gridPix);      //notify user of offset
+      } else {
+        ui.notifications.info("Grid Size must be 50px  or greater");
+        this.drawChild.clear();
+      }
         dL._removeListeners();
         //dL.drawChild = null;
         if (cB.activeTool == "aGrid") {    //This is here for future work on an automatic scale/offset function. When I can get it to work right. It scales properly but offsets are wrong.
@@ -429,17 +566,20 @@ class DrawingLayer extends CanvasLayer {
       autoAdjustOffset (gridPix, curScene) {    //this is called when automatic adjustment of X/Y with grid square is selected.
         let adjY2 = canvas.dimensions.paddingX;     //needed for adjustment of x/y
         let adjX2 = canvas.dimensions.width;     //needed for adjustment of x/y
-        //console.log(adjX2 + "" + adjY2);
+        console.log(adjX2 + "" + adjY2);
+        console.log("***** This is preGridScale")
+        console.log(dL.preGridScale);
         let adjustedY = gridPix - Math.abs(dL.preGridScale[1] - adjY2)
         let adjustedX = gridPix - Math.abs(dL.preGridScale[0] - adjX2)
-        //console.log("this is adjusted Y " + adjustedY);
-        //console.log("this is adjusted X " + adjustedX);
+        console.log("this is adjusted Y " + adjustedY);
+        console.log("this is adjusted X " + adjustedX);
         curScene.update({shiftX: adjustedX});      //this will update the current scene, this time it is the xOffset
         curScene.update({shiftY: adjustedY});      //this will update the current scene, this time it is the yOffset
       }
 
       setDrawChild(){     //this sets up drawChild for drawing the square.
         this.drawChild = canvas.controls.addChild(new PIXI.Graphics());
+        this.drawText =  canvas.controls.addChild(new PIXI.Text());
         //this.drawChildBackup = Object.freeze(this.drawChild);
     //console.log(dL.drawChild, "this is drawbox drawchild at setup")
         //dL.drawChild = canvas.stage.addChild(new PIXI.Graphics());
@@ -448,6 +588,8 @@ class DrawingLayer extends CanvasLayer {
       hookActorList(t) {
         Hooks.on('renderSceneControls', html => {     //Here we hook onto the program rendering the SceneControls html. (Should be noted dont really know what this is doing but it worked)
             this.drawChild = canvas.grid.addChild(new PIXI.Graphics());
+            dL.drawSomeText();
+            //this.drawText =  canvas.controls.addChild(new PIXI.Text());
             cB.render(1);     //once again, this is the .render function dont fully know what it does but it shows the buttons so good enough.
         });     //Ending Hooks.on
       }     //ending hookActorList function
@@ -461,12 +603,9 @@ class DrawingLayer extends CanvasLayer {
 let cB = new CustomButtons();
 let dL = new DrawingLayer();
 
-//setTimeout(function(){cB.render(1); },4000);
 cB.modifyiList();
 //dL.defineButtons();
 dL.defineButtons();
-//setTimeout(function(){cB.render(!0); },4000);
-//setTimeout(function(){dL.hookActorList(); },4100);
 dL.hookActorList();
 
 console.log("Grid Scale | ** Finished Loading **");
