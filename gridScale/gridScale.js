@@ -1,6 +1,6 @@
 /**
  * @author UberV
- * @version 0.0.5
+ * @version 0.0.6
  */
 
  class CustomButtons extends Application {     //This class defines the new set of buttons that we are using for this module. Pulled from foundry.js and modified to the best of my understanding.
