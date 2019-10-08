@@ -4,7 +4,6 @@
   "description": "This should add some buttons to modify square grids to the canvas",
   "version": "0.0.4",
   "author": "UberV",
-  "systems": ["dnd5e"],
   "scripts": ["./gridScale.js"],
   "styles": ["./gridScale.css"],
   "packs": []
