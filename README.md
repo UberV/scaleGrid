@@ -2,7 +2,7 @@
 
 ## Compatibility
 
-Requires FVTT version 0.1.0 or higher
+Requires FVTT version 0.3.9 or higher
 
 To install a module, follow these instructions:
 
@@ -38,6 +38,15 @@ It may not be perfect but it will be close.
 
 1. Fix auto-grid - Need to figure out how to deal with the scenes size changing when grid sizes change as this throws off the original click location.
 
+### Changes in version - 0.0.7
+
+1. Changed how the buttons are added to the screen. Now using the API provided by foundry. From here forward new updates **WILL NOT WORK** with older versions.
+2. Added a 3x3 button. This will allow users to select a 3x3 area of grid squares and have foundry calculate the grid size from that.
+
+### Changes in version - 0.0.6
+
+MIA - We dont talk about this version
+
 ### Changes in version - 0.0.5
 
 1. Removed auto-grid due to issues with click points changing when the scene gets updated and throwing off the calculations. Needs more calibration.
@@ -61,8 +70,7 @@ It may not be perfect but it will be close.
 
 ### Known issues
 
-1. Sometimes the button to access the tools will not work. I beleive this is due to how I am calling it but am not entierly sure. ** Workaround(s) ** Reload the page, seems to work after that.
-2. Cant fold the menu back into itself - Using existing code from foundry.js and was not able to get it to do what I wanted without breaking it completely. 
+1.Clean up this mess, wow...
 
 ## Notes and Mentions
 
