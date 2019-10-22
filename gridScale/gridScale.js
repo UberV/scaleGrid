@@ -1,6 +1,6 @@
 /**
  * @author UberV
- * @version 0.0.6
+ * @version 0.0.7
  */
 
  class CustomButtons extends Application {     //This class defines the new set of buttons that we are using for this module. Pulled from foundry.js and modified to the best of my understanding.
@@ -19,6 +19,7 @@
    get activeTool() {     //returns the active control (in thise case there is only one control called gridC.) then the active tool (one of the four specified below)
      return this.controls[this.activeControl].activeTool
    }
+
    get activeLayer() {      //used to return the layer that the tool should work on. This is a left over from foundry.js that I did not want to remove incase it broke something.
      return this.controls[this.activeControl].layer
    }
@@ -65,11 +66,11 @@ toggleSidebar() {      //meant to toggle visibility of toolbar but could not get
 
 modifyiList(){
     let t = cB.iList
+    /*
     t["closeToolbar"] = {};
     t["closeToolbar"]["name"] = "Close Button";
     t["closeToolbar"]["icon"] = "fas fa-hand-point-left"
     t["closeToolbar"]["tools"] = {};
-    /*
     t["potato"] = {};
     t["potato"]["name"] = "I AM POTATO";
     t["potato"]["icon"] = "fas fa-expand"
@@ -88,33 +89,34 @@ modifyiList(){
     //console.log("Grid Scale | this is modified T ^^^^^")
     //console.log(t);
     this.configure();
-    cB.render();
+    console.log("******* WHY WAS I CALLED -- CB")
+    //cB.render();
   }
 
-
+/*
    activateListeners(t) {     //this is some magical stuff, I think this gets called after this gets rendered but dont really know. Ultimatly this is what controls the buttons and what they do.
      cB.tData = t;
-     let potato = $(".grid-control active");
-     potato.toggleClass("grid-control ");
+     let potato = $(".scene-control active");
+     potato.toggleClass("scene-control ");
      //console.log("Grid Scale | ***this is activateListeners T,f,e, thisActiveControl")
      //console.log(t)
      //this gets called after updating the class maybe????
-     t.find(".grid-control").click(t => {
-       let f =  $(t.currentTarget).hasClass("grid-control active");
+     t.find(".scene-control").click(t => {
+       let f =  $(t.currentTarget).hasClass("scene-control active");
        //console.log(this.controls);
        let e = $(t.currentTarget).attr("data-control");
        let myT = $(t.currentTarget);
        this.activeControl = e;
-       if (myT.hasClass("grid-control active") == true){
+       if (myT.hasClass("scene-control active") == true){
          console.log("Grid Scale | This is already active, deactivating")
-         $(t.currentTarget).attr("class", "grid-control ")
+         $(t.currentTarget).attr("class", "scene-control ")
        }else{
-         this.prevControl !== null && (this.prevControl.attr("class", "grid-control "));
-       $(t.currentTarget).toggleClass("grid-control active");
+         this.prevControl !== null && (this.prevControl.attr("class", "scene-control "));
+       $(t.currentTarget).toggleClass("scene-control active");
        this.prevControl = $(t.currentTarget);
      }
      }) ,
-      t.find(".grid-tool").click(t => {     //returns the grid-tool that has been clicked.
+      t.find(".scene-tool").click(t => {     //returns the grid-tool that has been clicked.
        let e = $(t.currentTarget).attr("data-tool"),      //jquery i think. Returns the current data-tools target
          i = this.controls[this.activeControl];
       i.activeTool = e, this.currentTool = e  //modified end statement which calls potato function and swtich to determine what to do. Dont know what exactly .render does.
@@ -124,7 +126,7 @@ modifyiList(){
        this.controls[this.activeControl]["tools"][this.currentTool]["prog"]();
      })
 
-   }
+   } */
  }
 // End Custom Menu
 
@@ -142,10 +144,52 @@ class DrawingLayer extends CanvasLayer {
     let dataCoords = null;      //variable to store the first clicks x coord
     let preGridScale = null;      //variable to store the first clicks y coord
     let secondY = null;     //variable to store the second clicks y coord
-    let testVar1 = null;  //testing variable
-    let testVal2 = null;  //testing variable
+    this.testVar1 = null;  //testing variable
+    let newButtons = null;  //testing variable
     let testVal3 = null;  //testing variable
     // <================== Class Variable Definition ====================>
+  }
+
+  setButtons(){
+    dL.newButtons = {
+    activeTool: "reset",
+    name: "grid",
+    icon: "fas fa-wrench",
+    layer: "GridLayer",
+    title: "Grid Controls",
+    tools: [
+      {
+        icon: "fas fa-window-restore",
+        name: "reset",
+        title: "Reset Grid",
+        onClick: dL.resetGrid
+      },
+      {
+        icon: "fas fas fa-square",
+        name: "DrawSquare",
+        title: "Configure the grid by drawing a square",
+        onClick: dL.setupDrawSquare
+      },
+      {
+        icon: "fas fa-ruler-horizontal",
+        name: "AdjustX",
+        title: "Adjust the X position of the grid",
+        onClick: dL.setupAdjX
+      },
+      {
+        icon: "fas fa-ruler-vertical",
+        name: "AdjustY",
+        title: "Adjust the Y position of the grid",
+        onClick: dL.setupAdjY
+      },
+      {
+        icon: "fas fa-boxes",
+        name: "3X3",
+        title: "Configure grid by drawing a 3x3 box",
+        onClick: dL.setup3X3
+      }
+    ]
+    }
   }
 
   defineButtons(){
@@ -153,19 +197,24 @@ class DrawingLayer extends CanvasLayer {
     //console.log("Grid Scale | Drawing Layer | this is current iList")
     //console.log(t);
     t["gridC"] = {};
-    t["gridC"]["name"] = "Basic Grid Controls";
+    t["gridC"]["activeTool"] = "potato"
+    t["gridC"]["name"] = "grid";
     t["gridC"]["icon"] = "fas fa-wrench"
+    t["gridC"]["layer"] = "DrawingsLayer"
+    t["gridC"]["title"] = "CONTROLS.GridControls"
     t["gridC"]["tools"] = {};
     t["gridC"]["tools"]["resetGrid"] = {};
-    t["gridC"]["tools"]["resetGrid"]["name"] = "Reset Grid";
+    t["gridC"]["tools"]["resetGrid"]["name"] = "reset";
     t["gridC"]["tools"]["resetGrid"]["icon"] = "fas fa-window-restore";
-    t["gridC"]["tools"]["resetGrid"]["prog"] = dL.resetGrid;    //dont need to user () after function for this?
-    /*
+    t["gridC"]["tools"]["resetGrid"]["onClick"] = dL.resetGrid;    //dont need to user () after function for this?
+    t["gridC"]["tools"]["resetGrid"]["active"] = false;
+    t["gridC"]["tools"]["resetGrid"]["title"] = "CONTROLS.GridReset";
+/*
     t["gridC"]["tools"]["aGrid"] = {};
     t["gridC"]["tools"]["aGrid"]["name"] = "Auto Draw Grid";
     t["gridC"]["tools"]["aGrid"]["icon"] = "fas fa-square";
     t["gridC"]["tools"]["aGrid"]["prog"] = dL.callAGrid;    //dont need to user () after function for this?
-    */
+
     t["gridC"]["tools"]["size"] = {};
     t["gridC"]["tools"]["size"]["name"] = "Draw Grid";
     t["gridC"]["tools"]["size"]["icon"] = "fas fa-compress";
@@ -178,7 +227,11 @@ class DrawingLayer extends CanvasLayer {
     t["gridC"]["tools"]["adjY"]["name"] = "Adjust Y";
     t["gridC"]["tools"]["adjY"]["icon"] = "fas fa-ruler-vertical";
     t["gridC"]["tools"]["adjY"]["prog"] = dL._addListeners;   //dont need to user () after function for this?
-    t["gridC"]["activeTool"] = ""
+    t["gridC"]["tools"]["3x3"] = {};
+    t["gridC"]["tools"]["3x3"]["name"] = "3X3";
+    t["gridC"]["tools"]["3x3"]["icon"] = "fas fa-boxes";
+    t["gridC"]["tools"]["3x3"]["prog"] = dL.callAGrid;   //dont need to user () after function for this?
+
     /*
     t["testing"] = {};
     t["testing"]["name"] = "Testing Grid Controls";
@@ -206,10 +259,37 @@ class DrawingLayer extends CanvasLayer {
     //console.log(t);
     cB.configure();
     //this.drawChild = this.drawChildBackup = canvas.grid.addChild(new PIXI.Graphics());
+    console.log("******* WHY WAS I CALLED -- DL")
     //cB.render();
   }
 
     // Should be noted from here on out it gets dicey. I copied functions from foundry.js because I dont know how to reference them so some things I dont entierly understand.
+
+    setupAdjX(){
+      console.log("Grid Scale | Drawing Layer | Running AdjustX")
+      cB.currentTool = "adjX"
+      dL._addListeners();
+    }
+
+    setupAdjY(){
+      console.log("Grid Scale | Drawing Layer | Running AdjustY")
+      cB.currentTool = "adjY"
+      dL._addListeners();
+    }
+
+    setupDrawSquare(){
+      console.log("Grid Scale | Drawing Layer | Running DrawSquare")
+      cB.currentTool = "size"
+      //cB.activeTool = "size"
+      dL.callAGrid();
+    }
+
+    setup3X3(){
+      console.log("Grid Scale | Drawing Layer | Running 3X3")
+      cB.currentTool = "3x3"
+      //cB.activeTool = "size"
+      dL.callAGrid();
+    }
 
       getTopLeft(t, e) {      //from foundry.js = I think this reutrns the top left coords of the grid square that contains the given x/y coords.
         const i = canvas.dimensions.size;
@@ -279,6 +359,8 @@ class DrawingLayer extends CanvasLayer {
     //console.log("Mouse Down?");
     let tDI = t.data.getLocalPosition(this);
     t.data.initial = tDI;
+    //console.log("Grid Scale | Drawing Layer | Current Tool");
+    //console.log(cB.currentTool);
     switch (cB.currentTool){     //this switch statement checks the value of the active tool from gridControls then picks the right function on mouse click.
       case "resetGrid":
         break;
@@ -297,8 +379,11 @@ class DrawingLayer extends CanvasLayer {
       break;
       */
       case "size":
+      case "3x3":
       case "aGrid":     //this switch is used to add the mousemove listener for drawing the grid square
         dL._addMoveListener();
+        dL.testVar1 = tDI;
+        //console.log(dL.testVar1)
         break;
         case "test2":     //test buttons case. move along.
           console.log("&&^^Calling Mouse Testing^^&&");
@@ -344,9 +429,11 @@ class DrawingLayer extends CanvasLayer {
 
       _onMouseMove(t) {     //should only be active for drawing the grid square. But in case it is active at some other point there is a if statement that checks for actie tool and if it needs drawn.
     //console.log("MouseMove?")
+    //console.log("Grid Scale | Drawing Layer | Mose has moved")
     let e = t.data.initial;
     let i = t.data.getLocalPosition(this);
-    if (cB.activeTool == "aGrid" || cB.activeTool == "size" && dL.needsDrawn == true) {
+    //console.log(i)
+    if (cB.currentTool == "aGrid" || cB.currentTool == "3x3" ||cB.currentTool == "size" && dL.needsDrawn == true) {
     dL.configureSquare(e,i,t);
     }
     }
@@ -356,7 +443,7 @@ class DrawingLayer extends CanvasLayer {
     let tDI = t.data.getLocalPosition(this);
     if (dL.needsDrawn == true) {      //this triggers after finishing drawing the square. Resets some things, clears the square and switches back on the game listeners.
         //dL.needsDrawn = false, cB.currentTool = null, dL.drawChild.clear(), dL.enableGameListeners() ,dL.setGrid();
-              dL.needsDrawn = false, cB.currentTool = null, dL.enableGameListeners() ,dL.setGrid();
+              dL.needsDrawn = false, dL.enableGameListeners() ,dL.setGrid(), dL.textSample.visible = false;
     }
     }
 
@@ -452,12 +539,12 @@ class DrawingLayer extends CanvasLayer {
 
       if (absTopL > absTopR) {
         let xOff = curOffset - Math.floor(absTopR);     //Maths = Find the bigger of the two xnumbers and subtract the smaller one. round down and then add it to the current scene offset
-        //console.log("&& xOff is " + xOff);
+        console.log("&& xOff is " + xOff);
         curScene.update({shiftX: xOff});      //this will update the current scene, this time it is the xOffset
       } else {
-        //console.log("is closer to left side of square");
+        console.log("is closer to left side of square");
         let xOff = curOffset + Math.floor(absTopL);     //Maths = Find the bigger of the two xnumbers and subtract the smaller one. round down and then add it to the current scene offset
-        //console.log("&& xOff is " + xOff);
+        console.log("&& xOff is " + xOff);
         curScene.update({shiftX: xOff});      //this will update the current scene, this time it is the xOffset
       }
 
@@ -482,14 +569,14 @@ class DrawingLayer extends CanvasLayer {
       let absBot = Math.abs(oppY - s.y);
 
       if (absTop < absBot) {
-        //console.log("Is closer to top of square");
+        console.log("Is closer to top of square");
         let yOff = curOffset + Math.floor(absTop);     //Maths = Find the bigger of the two xnumbers and subtract the smaller one. round down and then add it to the current scene offset
-        //console.log("&& yOff is " + yOff);
+        console.log("&& yOff is " + yOff);
         curScene.update({shiftY: yOff});      //this will update the current scene, this time it is the xOffset
       } else {
-        //console.log("is closer to bottom of square");
+        console.log("is closer to bottom of square");
         let yOff = curOffset - Math.floor(absBot);     //Maths = Find the bigger of the two xnumbers and subtract the smaller one. round down and then add it to the current scene offset
-        //console.log("&& yOff is " + yOff);
+        console.log("&& yOff is " + yOff);
         curScene.update({shiftY: yOff});      //this will update the current scene, this time it is the xOffset
       }
 
@@ -544,11 +631,14 @@ class DrawingLayer extends CanvasLayer {
     }
 
       setGrid(s) {      //this will set the grid square size then depending on the tool selected may adjust the offset in X/Y
-        let adjY1 = canvas.dimensions.paddingX;     //needed for adjustment of x/y later.
+        let adjY1 = canvas.dimensions.height;     //needed for adjustment of x/y later.
         let adjX1 = canvas.dimensions.width;     //needed for adjustment of x/y later.
         dL.preGridScale = [adjX1, adjY1];           //needed for adjustment of x/y later.
         let curScene = game.scenes.get(canvas.scene.data._id);     //This gets the scene object for the current scene by asking the canvas for the current scenes ID then reutrning that to the game.scenes.get
         let gridPix = Math.floor(dL.dataCoords[3]);      //getting the grid pixel size
+        //console.log("Grid Scale | Drawing Layer | ^^^^^ Current Tool ^^^^^")
+        //console.log(cB.currentTool);
+        if (cB.currentTool == "3x3") {gridPix = gridPix / 3};
         if (gridPix >= 50) {
         curScene.update({grid: gridPix});      //this will update the current scene, this time it is the grid square size
         ui.notifications.info("This is the Grid Size : " + gridPix);      //notify user of offset
@@ -558,13 +648,14 @@ class DrawingLayer extends CanvasLayer {
       }
         dL._removeListeners();
         //dL.drawChild = null;
-        if (cB.activeTool == "aGrid") {    //This is here for future work on an automatic scale/offset function. When I can get it to work right. It scales properly but offsets are wrong.
-          setTimeout(function(){dL.autoAdjustOffset(gridPix, curScene); },1000);     //after 1.5 second call setYOff
+        if (cB.currentTool == "aGrid") {    //This is here for future work on an automatic scale/offset function. When I can get it to work right. It scales properly but offsets are wrong.
+          setTimeout(function(){dL.autoAdjustOffset(gridPix, curScene, adjY1, adjX1); },1000);     //after 1.5 second call setYOff
         }
+        cB.currentTool = null;
       }
 
-      autoAdjustOffset (gridPix, curScene) {    //this is called when automatic adjustment of X/Y with grid square is selected.
-        let adjY2 = canvas.dimensions.paddingX;     //needed for adjustment of x/y
+      /*autoAdjustOffset (gridPix, curScene) {    //this is called when automatic adjustment of X/Y with grid square is selected.
+        let adjY2 = canvas.dimensions.height;     //needed for adjustment of x/y
         let adjX2 = canvas.dimensions.width;     //needed for adjustment of x/y
         console.log(adjX2 + "" + adjY2);
         console.log("***** This is preGridScale")
@@ -575,6 +666,28 @@ class DrawingLayer extends CanvasLayer {
         console.log("this is adjusted X " + adjustedX);
         curScene.update({shiftX: adjustedX});      //this will update the current scene, this time it is the xOffset
         curScene.update({shiftY: adjustedY});      //this will update the current scene, this time it is the yOffset
+      }*/
+
+      autoAdjustOffset (gridPix, curScene,adjY1, adjX1) {    //this is called when automatic adjustment of X/Y with grid square is selected.
+        let adjY2 = canvas.dimensions.height;     //needed for adjustment of x/y
+        let adjX2 = canvas.dimensions.width;     //needed for adjustment of x/y
+        console.log(adjX1 + "" + adjY1);
+        console.log("***** This is the map prior to adjustment");
+        console.log(adjX2 + "" + adjY2);
+        console.log("***** This is the map after the adjustment");
+        let adjustedY = Math.abs(adjY1 - adjY2);
+        let adjustedX = Math.abs(adjX1 - adjX2);
+        console.log("this is the difference in the Y " + adjustedY);
+        console.log("this is the difference in the X " + adjustedX);
+        console.log("this is the original X coord " + dL.testVar1.x);
+        console.log("this is the original Y coord " + dL.testVar1.y);
+        adjustedX = dL.testVar1.x - adjustedX;
+        adjustedY = dL.testVar1.y - adjustedY;
+        console.log("this is the difference in the X " + adjustedX);
+        console.log("this is the difference in the Y " + adjustedY);
+        let varPass = {x:adjustedX,y:adjustedY};
+        //dL.newsetXOff(varPass);
+        dL.newsetYOff(varPass);
       }
 
       setDrawChild(){     //this sets up drawChild for drawing the square.
@@ -585,15 +698,15 @@ class DrawingLayer extends CanvasLayer {
         //dL.drawChild = canvas.stage.addChild(new PIXI.Graphics());
       }
 
-      hookActorList(t) {
-        Hooks.on('renderSceneControls', html => {     //Here we hook onto the program rendering the SceneControls html. (Should be noted dont really know what this is doing but it worked)
-            this.drawChild = canvas.grid.addChild(new PIXI.Graphics());
-            dL.drawSomeText();
-            //this.drawText =  canvas.controls.addChild(new PIXI.Text());
-            cB.render(1);     //once again, this is the .render function dont fully know what it does but it shows the buttons so good enough.
-        });     //Ending Hooks.on
-      }     //ending hookActorList function
-
+      newHookTest(){
+      Hooks.on('getSceneControlButtons', controls => {
+        //console.log(controls);
+        controls.push(dL.newButtons);
+        //console.log(controls);
+        dL.setDrawChild();
+        dL.drawSomeText();
+      });
+    }
 
 }     //ends extendedCanvas class
 
@@ -603,9 +716,13 @@ class DrawingLayer extends CanvasLayer {
 let cB = new CustomButtons();
 let dL = new DrawingLayer();
 
-cB.modifyiList();
+dL.setButtons();
+dL.newHookTest();
+//cB.modifyiList();
 //dL.defineButtons();
-dL.defineButtons();
-dL.hookActorList();
+//dL.defineButtons();
+//dL.hookActorList();
+//dL.hookCustomButtons();
+
 
 console.log("Grid Scale | ** Finished Loading **");
