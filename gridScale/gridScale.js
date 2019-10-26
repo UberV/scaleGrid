@@ -1,134 +1,7 @@
 /**
  * @author UberV
- * @version 0.0.7
+ * @version 0.0.8
  */
-
- class CustomButtons extends Application {     //This class defines the new set of buttons that we are using for this module. Pulled from foundry.js and modified to the best of my understanding.
-   constructor(t) {
-     super(t),this.toolBtnIds = [["gs-closeToolbar", false],["gs-size", false],["gs-adjX", false],["gs-adjY", false]], this.iList = null,this.prevControl = null; this.tData = null, this.currentTool = null, this.activeControl = null, this.needsDrawn = false     //Added in a class wide variable for the names of the button ids but ended up not using them. May need it in the future so leaving it in.
-   this.configureInitial();
-   this.controls = this.configure();
-   console.log("Grid Scale | **** Custom Buttons Loaded ****");
-   //console.log(this.controls);
-   }
-   static get defaultOptions() {      //Pulled from foundry.js - Dont fully know what it does but it allows us to define our HTML template and the ID for the HTML OL.
-     const t = super.defaultOptions;
-     return t.id = "gridCont", t.template = "public/modules/gridScale/gridScale.html", t.popOut = !1, t     //Dont know what t.popout means.
-   }
-
-   get activeTool() {     //returns the active control (in thise case there is only one control called gridC.) then the active tool (one of the four specified below)
-     return this.controls[this.activeControl].activeTool
-   }
-
-   get activeLayer() {      //used to return the layer that the tool should work on. This is a left over from foundry.js that I did not want to remove incase it broke something.
-     return this.controls[this.activeControl].layer
-   }
-
-   configure(){
-     let t = this.iList;
-     //console.log("Grid Scale | $$$$ THis is this.iList");
-     //console.log(t);
-     return t;
-   };
-
- configureInitial(){
-  let t = {};
- this.iList = t;
-}
-
-   getData() {      //No idea what this does, never messed with it.
-     const t = {
-       active: canvas && canvas.ready,
-       controls: this.controls
-     };
-     for (let [e, i] of Object.entries(t.controls)) {
-       i.status = this.activeControl === e ? "active" : "";
-       for (let [t, e] of Object.entries(i.tools)) e.status = i.activeTool === t ? "active" : ""
-     }
-     return t
-   }      //end no idea
-
-
-potatoFunction(t) {     //needed logging function, got potato
-  console.log("Grid Scale | !!!!!!!!!!!! LOGGING POTATO !!!!!!!!!!!!!")
-  //  alert("!!!!POTATO!!!!")
-  //console.log(t);
-}
-
-toggleSidebar() {      //meant to toggle visibility of toolbar but could not get it to work right. Will try again later.
-  let arse = document.getElementById("sidebar");
-  if (arse.style.display === "none") {
-  arse.style.display = "block";
-} else {
-  arse.style.display = "none";
-}
-}
-
-modifyiList(){
-    let t = cB.iList
-    /*
-    t["closeToolbar"] = {};
-    t["closeToolbar"]["name"] = "Close Button";
-    t["closeToolbar"]["icon"] = "fas fa-hand-point-left"
-    t["closeToolbar"]["tools"] = {};
-    t["potato"] = {};
-    t["potato"]["name"] = "I AM POTATO";
-    t["potato"]["icon"] = "fas fa-expand"
-    t["potato"]["tools"] = {};
-    t["potato"]["tools"]["test"] = {};
-    t["potato"]["tools"]["test"]["name"] = "TestingButton";
-    t["potato"]["tools"]["test"]["icon"] = "fas fa-hand-rock";
-    t["potato"]["tools"]["test"]["prog"] = cB.potatoFunction     //dont need to user () after function for this?
-    t["potato"]["activeTool"] = ""
-    t["potato"]["tools"]["toggle"] = {};
-    t["potato"]["tools"]["toggle"]["name"] = "Toggle Sidebar";
-    t["potato"]["tools"]["toggle"]["icon"] = "fas fa-long-arrow-alt-left";
-    t["potato"]["tools"]["toggle"]["prog"] = cB.toggleSidebar     //dont need to user () after function for this?
-    t["potato"]["activeTool"] = ""
-    */
-    //console.log("Grid Scale | this is modified T ^^^^^")
-    //console.log(t);
-    this.configure();
-    console.log("******* WHY WAS I CALLED -- CB")
-    //cB.render();
-  }
-
-/*
-   activateListeners(t) {     //this is some magical stuff, I think this gets called after this gets rendered but dont really know. Ultimatly this is what controls the buttons and what they do.
-     cB.tData = t;
-     let potato = $(".scene-control active");
-     potato.toggleClass("scene-control ");
-     //console.log("Grid Scale | ***this is activateListeners T,f,e, thisActiveControl")
-     //console.log(t)
-     //this gets called after updating the class maybe????
-     t.find(".scene-control").click(t => {
-       let f =  $(t.currentTarget).hasClass("scene-control active");
-       //console.log(this.controls);
-       let e = $(t.currentTarget).attr("data-control");
-       let myT = $(t.currentTarget);
-       this.activeControl = e;
-       if (myT.hasClass("scene-control active") == true){
-         console.log("Grid Scale | This is already active, deactivating")
-         $(t.currentTarget).attr("class", "scene-control ")
-       }else{
-         this.prevControl !== null && (this.prevControl.attr("class", "scene-control "));
-       $(t.currentTarget).toggleClass("scene-control active");
-       this.prevControl = $(t.currentTarget);
-     }
-     }) ,
-      t.find(".scene-tool").click(t => {     //returns the grid-tool that has been clicked.
-       let e = $(t.currentTarget).attr("data-tool"),      //jquery i think. Returns the current data-tools target
-         i = this.controls[this.activeControl];
-      i.activeTool = e, this.currentTool = e  //modified end statement which calls potato function and swtich to determine what to do. Dont know what exactly .render does.
-       console.log("Grid Scale | Here is the current control and tool = "+ this.activeControl + " | " + this.currentTool);
-       //console.log(this.controls);
-       //console.log(this.controls[this.activeControl]["tools"][this.currentTool]["prog"]())
-       this.controls[this.activeControl]["tools"][this.currentTool]["prog"]();
-     })
-
-   } */
- }
-// End Custom Menu
 
 class DrawingLayer extends CanvasLayer {
   constructor() {
@@ -146,11 +19,11 @@ class DrawingLayer extends CanvasLayer {
     let secondY = null;     //variable to store the second clicks y coord
     this.testVar1 = null;  //testing variable
     let newButtons = null;  //testing variable
-    let testVal3 = null;  //testing variable
+    let currentTool = null;  //testing variable
     // <================== Class Variable Definition ====================>
   }
 
-  setButtons(){
+  setButtons(){     //This function will setup the buttons into the proper format for the new (as of 0.3.9) controls API
     dL.newButtons = {
     activeTool: "reset",
     name: "grid",
@@ -187,118 +60,55 @@ class DrawingLayer extends CanvasLayer {
         name: "3X3",
         title: "Configure grid by drawing a 3x3 box",
         onClick: dL.setup3X3
+      },
+      {
+        icon: "fas fa-gem",
+        name: "Poly",
+        title: "Configure the grid by drawing a Hexagon",
+        onClick: dL.setupPoly
       }
     ]
     }
-  }
-
-  defineButtons(){
-    let t = cB.iList
-    //console.log("Grid Scale | Drawing Layer | this is current iList")
-    //console.log(t);
-    t["gridC"] = {};
-    t["gridC"]["activeTool"] = "potato"
-    t["gridC"]["name"] = "grid";
-    t["gridC"]["icon"] = "fas fa-wrench"
-    t["gridC"]["layer"] = "DrawingsLayer"
-    t["gridC"]["title"] = "CONTROLS.GridControls"
-    t["gridC"]["tools"] = {};
-    t["gridC"]["tools"]["resetGrid"] = {};
-    t["gridC"]["tools"]["resetGrid"]["name"] = "reset";
-    t["gridC"]["tools"]["resetGrid"]["icon"] = "fas fa-window-restore";
-    t["gridC"]["tools"]["resetGrid"]["onClick"] = dL.resetGrid;    //dont need to user () after function for this?
-    t["gridC"]["tools"]["resetGrid"]["active"] = false;
-    t["gridC"]["tools"]["resetGrid"]["title"] = "CONTROLS.GridReset";
-/*
-    t["gridC"]["tools"]["aGrid"] = {};
-    t["gridC"]["tools"]["aGrid"]["name"] = "Auto Draw Grid";
-    t["gridC"]["tools"]["aGrid"]["icon"] = "fas fa-square";
-    t["gridC"]["tools"]["aGrid"]["prog"] = dL.callAGrid;    //dont need to user () after function for this?
-
-    t["gridC"]["tools"]["size"] = {};
-    t["gridC"]["tools"]["size"]["name"] = "Draw Grid";
-    t["gridC"]["tools"]["size"]["icon"] = "fas fa-compress";
-    t["gridC"]["tools"]["size"]["prog"] = dL.callAGrid;     //dont need to user () after function for this?
-    t["gridC"]["tools"]["adjX"] = {};
-    t["gridC"]["tools"]["adjX"]["name"] = "Adjust X";
-    t["gridC"]["tools"]["adjX"]["icon"] = "fas fa-ruler-horizontal";
-    t["gridC"]["tools"]["adjX"]["prog"] = dL._addListeners;     //dont need to user () after function for this?
-    t["gridC"]["tools"]["adjY"] = {};
-    t["gridC"]["tools"]["adjY"]["name"] = "Adjust Y";
-    t["gridC"]["tools"]["adjY"]["icon"] = "fas fa-ruler-vertical";
-    t["gridC"]["tools"]["adjY"]["prog"] = dL._addListeners;   //dont need to user () after function for this?
-    t["gridC"]["tools"]["3x3"] = {};
-    t["gridC"]["tools"]["3x3"]["name"] = "3X3";
-    t["gridC"]["tools"]["3x3"]["icon"] = "fas fa-boxes";
-    t["gridC"]["tools"]["3x3"]["prog"] = dL.callAGrid;   //dont need to user () after function for this?
-
-    /*
-    t["testing"] = {};
-    t["testing"]["name"] = "Testing Grid Controls";
-    t["testing"]["icon"] = "fas fa-bullseye"
-    t["testing"]["tools"] = {};
-    t["testing"]["tools"]["adjXT"] = {};
-    t["testing"]["tools"]["adjXT"]["name"] = "Adjust X";
-    t["testing"]["tools"]["adjXT"]["icon"] = "fas fa-ruler-horizontal";
-    t["testing"]["tools"]["adjXT"]["prog"] = dL._addListeners;     //dont need to user () after function for this?
-    t["testing"]["tools"]["adjYT"] = {};
-    t["testing"]["tools"]["adjYT"]["name"] = "Adjust Y";
-    t["testing"]["tools"]["adjYT"]["icon"] = "fas fa-ruler-vertical";
-    t["testing"]["tools"]["adjYT"]["prog"] = dL._addListeners;   //dont need to user () after function for this?
-    t["testing"]["tools"]["mkTXT"] = {};
-    t["testing"]["tools"]["mkTXT"]["name"] = "Add Text";
-    t["testing"]["tools"]["mkTXT"]["icon"] = "fas fa-ruler-vertical";
-    t["testing"]["tools"]["mkTXT"]["prog"] = dL.drawSomeText;   //dont need to user () after function for this?
-    t["testing"]["tools"]["rmTXT"] = {};
-    t["testing"]["tools"]["rmTXT"]["name"] = "Remove Text";
-    t["testing"]["tools"]["rmTXT"]["icon"] = "fas fa-ruler-vertical";
-    t["testing"]["tools"]["rmTXT"]["prog"] = dL.removeSomeText;   //dont need to user () after function for this?
-    t["testing"]["activeTool"] = ""
-    */
-    console.log("Grid Scale | Drawing Layer | Menu Buttons Updated")
-    //console.log(t);
-    cB.configure();
-    //this.drawChild = this.drawChildBackup = canvas.grid.addChild(new PIXI.Graphics());
-    console.log("******* WHY WAS I CALLED -- DL")
-    //cB.render();
   }
 
     // Should be noted from here on out it gets dicey. I copied functions from foundry.js because I dont know how to reference them so some things I dont entierly understand.
 
     setupAdjX(){
       console.log("Grid Scale | Drawing Layer | Running AdjustX")
-      cB.currentTool = "adjX"
+      dL.currentTool = "adjX"
       dL._addListeners();
     }
 
     setupAdjY(){
       console.log("Grid Scale | Drawing Layer | Running AdjustY")
-      cB.currentTool = "adjY"
+      dL.currentTool = "adjY"
       dL._addListeners();
     }
 
     setupDrawSquare(){
       console.log("Grid Scale | Drawing Layer | Running DrawSquare")
-      cB.currentTool = "size"
-      //cB.activeTool = "size"
+      dL.currentTool = "size"
+      //dL.activeTool = "size"
       dL.callAGrid();
     }
 
     setup3X3(){
       console.log("Grid Scale | Drawing Layer | Running 3X3")
-      cB.currentTool = "3x3"
-      //cB.activeTool = "size"
+      dL.currentTool = "3x3"
+      //dL.activeTool = "size"
       dL.callAGrid();
     }
 
-      getTopLeft(t, e) {      //from foundry.js = I think this reutrns the top left coords of the grid square that contains the given x/y coords.
-        const i = canvas.dimensions.size;
-        //console.log(i + "" + t + "" + e);
-        let x = t - t % i
-        //console.log(x);
-        let y = e - e % i
-        //console.log(y);
-        return [x,y]
+    setupPoly(){
+      console.log("Grid Scale | Drawing Layer | Running Poly")
+      dL.currentTool = "Poly"
+      //dL.activeTool = "size"
+      dL.callAGrid();
+    }
+
+      getTopLeft(x, y) {      //from foundry.js = I think this reutrns the top left coords of the grid square that contains the given x/y coords.
+        const s = canvas.dimensions.size;
+        return [x, y].map(c => Math.round(c - (s /2)));
       }
 
       drawSomeText(t,s){    // This function sets up  the  Pixi text  container and styling.
@@ -306,7 +116,7 @@ class DrawingLayer extends CanvasLayer {
               dropShadow: true,
               dropShadowDistance: 1,
               fill: "#4bf02a",
-              fontSize: 40,
+              fontSize: 35,
               lineJoin: "round",
               strokeThickness: 4
             });
@@ -356,12 +166,12 @@ class DrawingLayer extends CanvasLayer {
       }
 
       _onMouseDown(t) {     //from foundry.js =  Modified to call the getPositionData function on click
-    //console.log("Mouse Down?");
+    //console.log(t);
     let tDI = t.data.getLocalPosition(this);
     t.data.initial = tDI;
     //console.log("Grid Scale | Drawing Layer | Current Tool");
-    //console.log(cB.currentTool);
-    switch (cB.currentTool){     //this switch statement checks the value of the active tool from gridControls then picks the right function on mouse click.
+    //console.log(dL.currentTool);
+    switch (dL.currentTool){     //this switch statement checks the value of the active tool from gridControls then picks the right function on mouse click.
       case "resetGrid":
         break;
       case "adjX":
@@ -380,6 +190,7 @@ class DrawingLayer extends CanvasLayer {
       */
       case "size":
       case "3x3":
+      case "Poly":
       case "aGrid":     //this switch is used to add the mousemove listener for drawing the grid square
         dL._addMoveListener();
         dL.testVar1 = tDI;
@@ -392,7 +203,7 @@ class DrawingLayer extends CanvasLayer {
           dL._removeListeners();
           break;
       default:
-        console.log(cB.currentTool)
+        console.log(dL.currentTool)
         dL._removeListeners();
         dL.enableGameListeners();
         console.log("Grid Scale | Drawing Layer | &&^^NO mouse expression matched^^&&")
@@ -433,8 +244,9 @@ class DrawingLayer extends CanvasLayer {
     let e = t.data.initial;
     let i = t.data.getLocalPosition(this);
     //console.log(i)
-    if (cB.currentTool == "aGrid" || cB.currentTool == "3x3" ||cB.currentTool == "size" && dL.needsDrawn == true) {
-    dL.configureSquare(e,i,t);
+    if (dL.currentTool == "aGrid" || dL.currentTool == "Poly" || dL.currentTool == "3x3" ||dL.currentTool == "size" && dL.needsDrawn == true) {
+      if (dL.currentTool == "Poly") {dL.configurePoly(e,i,t)}
+      else {dL.configureSquare(e,i,t)}
     }
     }
 
@@ -442,8 +254,11 @@ class DrawingLayer extends CanvasLayer {
     //console.log("Mouse Up?")
     let tDI = t.data.getLocalPosition(this);
     if (dL.needsDrawn == true) {      //this triggers after finishing drawing the square. Resets some things, clears the square and switches back on the game listeners.
-        //dL.needsDrawn = false, cB.currentTool = null, dL.drawChild.clear(), dL.enableGameListeners() ,dL.setGrid();
-              dL.needsDrawn = false, dL.enableGameListeners() ,dL.setGrid(), dL.textSample.visible = false;
+        //dL.needsDrawn = false, dL.currentTool = null, dL.drawChild.clear(), dL.enableGameListeners() ,dL.setGrid();
+        if (dL.currentTool == "Poly") {dL.needsDrawn = false, dL._removeListeners() ,dL.enableGameListeners() ,dL.setHexGrid(), dL.textSample.visible = false;}
+        else {
+              dL.needsDrawn = false, dL.drawChild.clear() , dL.enableGameListeners() ,dL.setGrid(), dL.textSample.visible = false;
+            }
     }
     }
 
@@ -490,37 +305,6 @@ class DrawingLayer extends CanvasLayer {
         }     //ends else
       }     //ends getPositionData function
 
-    setXOff(s) {      //this function takes in a mouse click then calls getTopLeft to find the top left corner of the grid square that the click was in then gets the offset in a positive number.
-      dL._removeListeners();     //removing listeners to so as to not get any more data and mess up the calculations
-      //console.log("%%%%%%This is S")
-      //console.log(s)
-      let curScene = game.scenes.get(canvas.scene.data._id);      //getting current scenes ID from the canvas
-      let curOffset = curScene.data.shiftX;     //getting the current xOffset incase it is not = 0 we need to add out new offset number to it.
-      //console.log("The current X offset is = " + curOffset);
-      let closeTopL = dL.getTopLeft(s.x, s.y);     //getting X/Y of grid corner
-      //console.log("%%%%%%This is Close top left of clicked square.")
-      //console.log(closeTopL)
-      let xOff = curOffset + Math.floor(Math.max(s.x, closeTopL[0]) - Math.min(s.x, closeTopL[0]));     //Maths = Find the bigger of the two xnumbers and subtract the smaller one. round down and then add it to the current scene offset
-      ui.notifications.info("This is the X offset : " + xOff);      //notify user of offset.
-      curScene.update({shiftX: xOff});      //this will update the current scene, this time it is the xOffset
-    }
-
-    setYOff(s) {      //this function takes in a mouse click then calls getTopLeft to find the top left corner of the grid square that the click was in then gets the offset in a positive number.
-      //console.log("%%%%%%This is S")
-      //console.log(s)
-      dL._removeListeners();     //removing listeners to so as to not get any more data and mess up the calculations
-      let curScene = game.scenes.get(canvas.scene.data._id);      //getting current scenes ID from the canvas
-      //console.log(curScene);
-      let curOffset = curScene.data.shiftY;     //getting the current xOffset incase it is not = 0 we need to add out new offset number to it.
-      //console.log("The current Y offset is = " + curOffset);
-      let closeTopL = dL.getTopLeft(s.x, s.y);     //getting X/Y of grid corner
-      //console.log("%%%%%%This is Close top left of clicked square.")
-      //console.log(closeTopL)
-      let yOff = curOffset + Math.floor(Math.max(s.y, closeTopL[1]) - Math.min(s.y, closeTopL[1]));    //Maths = Find the bigger of the two xnumbers and subtract the smaller one. round down and then add it to the current scene offset
-      ui.notifications.info("This is the Y offset : " + yOff);      //notify user of offset.
-      curScene.update({shiftY: yOff});      //this will update the current scene, this time it is the xOffset
-    }
-
     newsetXOff(s) {      //this function takes in a mouse click then calls getTopLeft to find the top left corner of the grid square that the click was in then gets the offset in a positive number.
                         // Added the logic so it wont constantly shift in the positive direction. Instead finds the closest side the clicked point and will move the grid in either + or - to get there.
 
@@ -531,22 +315,81 @@ class DrawingLayer extends CanvasLayer {
       let curGrid = curScene.data.grid;      //getting current grid size from the canvas
       let curOffset = curScene.data.shiftX;     //getting the current xOffset incase it is not = 0 we need to add out new offset number to it.
       //console.log("The current X offset is = " + curOffset);
-      let closeTopL = dL.getTopLeft(s.x, s.y);     //getting X/Y of grid corner
-      let oppX = closeTopL[0] + curGrid;
-      let sG = s.x + curGrid;
-      let absTopL = Math.abs(closeTopL[0] - s.x);
-      let absTopR = Math.abs(oppX - s.x);
+      let curGridType = canvas.scene.data.gridType;
+      let hexPValues = null;
+      switch(curGridType){  // This switch was added to determine what type of grid is in use and then apply the correct adjustment calculations.
+      case 0:
+        console.log("why was i created")
+      break;
+      case 1:
+          console.log("Grid Scale | Drawing Layer | Adjust X Square")
+        let closeTopL = canvas.grid.getTopLeft(s.x, s.y);     //getting X/Y of grid corner
+        let oppX = closeTopL[0] + curGrid;
+        let sG = s.x + curGrid;
+        let absTopL = Math.abs(closeTopL[0] - s.x);
+        let absTopR = Math.abs(oppX - s.x);
 
-      if (absTopL > absTopR) {
-        let xOff = curOffset - Math.floor(absTopR);     //Maths = Find the bigger of the two xnumbers and subtract the smaller one. round down and then add it to the current scene offset
-        console.log("&& xOff is " + xOff);
-        curScene.update({shiftX: xOff});      //this will update the current scene, this time it is the xOffset
-      } else {
-        console.log("is closer to left side of square");
-        let xOff = curOffset + Math.floor(absTopL);     //Maths = Find the bigger of the two xnumbers and subtract the smaller one. round down and then add it to the current scene offset
-        console.log("&& xOff is " + xOff);
-        curScene.update({shiftX: xOff});      //this will update the current scene, this time it is the xOffset
+        if (absTopL > absTopR) {
+          let xOff = curOffset - Math.floor(absTopR);     //Maths = Find the bigger of the two xnumbers and subtract the smaller one. round down and then add it to the current scene offset
+          console.log("&& xOff is " + xOff);
+          curScene.update({shiftX: xOff});      //this will update the current scene, this time it is the xOffset
+        } else {
+          console.log("is closer to left side of square");
+          let xOff = curOffset + Math.floor(absTopL);     //Maths = Find the bigger of the two xnumbers and subtract the smaller one. round down and then add it to the current scene offset
+          console.log("&& xOff is " + xOff);
+          curScene.update({shiftX: xOff});      //this will update the current scene, this time it is the xOffset
+        }
+      break;
+      case 2:
+      case 3:
+        console.log("Grid Scale | Drawing Layer | Pointy Hex Adjust X")
+        hexPValues = dL.getPointyHexPoints(s.x,s.y)
+        //console.log(hexValues);
+        let absPL = Math.abs(hexPValues[0] - s.x);
+        let absPR = Math.abs(hexPValues[2] - s.x);
+        //console.log(absPL);
+        //console.log(absPR);
+        if (absPR < absPL) {
+          console.log("is closer to right side of hex");
+          let xOff = curOffset - Math.floor(absPR);     //Maths = Find the bigger of the two xnumbers and subtract the smaller one. round down and then add it to the current scene offset
+          console.log("&& xOff is " + xOff);
+          //let potat = hexValues[2] + xOff;
+          //dL.drawCircle(potat, hexValues[3]);
+          curScene.update({shiftX: xOff});      //this will update the current scene, this time it is the xOffset
+        } else {
+          console.log("is closer to left side of hex");
+          let xOff = curOffset + Math.floor(absPL);     //Maths = Find the bigger of the two xnumbers and subtract the smaller one. round down and then add it to the current scene offset
+          console.log("&& xOff is " + xOff);
+          //let potat = hexValues[0] + xOff;
+          //dL.drawCircle(potat, hexValues[1]);
+          curScene.update({shiftX: xOff});      //this will update the current scene, this time it is the xOffset
       }
+      break;
+      case 4:
+      case 5:
+      console.log("Grid Scale | Drawing Layer | Flat Hex Adjust X")
+      hexPValues = dL.getFlatHexPoints(s.x,s.y)
+      //console.log(hexPValues);
+      //console.log(s.x + " " + s.y);
+      let prefSide = dL.findTheBestSide(hexPValues[5],hexPValues[7],hexPValues[9],s.y)
+        if (prefSide == hexPValues[5]){
+                console.log("Grid Scale | Drawing Layer | Pointy Hex Adjust X | Chose Top points")
+          dL.setDatXOffset(hexPValues[14],hexPValues[10],s)
+        }
+        else if (prefSide == hexPValues[1]){
+                    console.log("Grid Scale | Drawing Layer | Pointy Hex Adjust X | Chose Middle POints")
+          dL.setDatXOffset(hexPValues[2],hexPValues[0],s)
+        }
+        else {
+                console.log("Grid Scale | Drawing Layer | Pointy Hex Adjust X | Chose Bottom Points")
+          dL.setDatXOffset(hexPValues[16],hexPValues[12],s)
+        }
+      break;
+      default:
+      console.log("to pass the butter")
+      }
+
+
 
 
     }
@@ -562,29 +405,138 @@ class DrawingLayer extends CanvasLayer {
       let curGrid = curScene.data.grid;      //getting current grid size from the canvas
       let curOffset = curScene.data.shiftY;     //getting the current xOffset incase it is not = 0 we need to add out new offset number to it.
       //console.log("The current Y offset is = " + curOffset);
-      let closeTopL = dL.getTopLeft(s.x, s.y);     //getting X/Y of grid corner
-      let oppY = closeTopL[1] + curGrid;
-      let sG = s.y + curGrid;
-      let absTop = Math.abs(closeTopL[1] - s.y);
-      let absBot = Math.abs(oppY - s.y);
+      let curGridType = canvas.scene.data.gridType;
 
-      if (absTop < absBot) {
-        console.log("Is closer to top of square");
-        let yOff = curOffset + Math.floor(absTop);     //Maths = Find the bigger of the two xnumbers and subtract the smaller one. round down and then add it to the current scene offset
-        console.log("&& yOff is " + yOff);
-        curScene.update({shiftY: yOff});      //this will update the current scene, this time it is the xOffset
-      } else {
-        console.log("is closer to bottom of square");
-        let yOff = curOffset - Math.floor(absBot);     //Maths = Find the bigger of the two xnumbers and subtract the smaller one. round down and then add it to the current scene offset
-        console.log("&& yOff is " + yOff);
-        curScene.update({shiftY: yOff});      //this will update the current scene, this time it is the xOffset
+      switch(curGridType){  // This switch was added to determine what type of grid is in use and then apply the correct adjustment calculations.
+      case 0:
+        console.log("why was i created")
+      break;
+      case 1:
+            console.log("Grid Scale | Drawing Layer | Square Adjust Y")
+        let closeTopL = canvas.grid.getTopLeft(s.x, s.y);     //getting X/Y of grid corner
+        let oppY = closeTopL[1] + curGrid;
+        let sG = s.y + curGrid;
+        let absTop = Math.abs(closeTopL[1] - s.y);
+        let absBot = Math.abs(oppY - s.y);
+        //dL.drawCircle(s.x,s.y);
+        //console.log(s.x);
+        //console.log(s.y);
+          if (absTop < absBot) {
+            console.log("Is closer to top of square");
+            let yOff = curOffset + Math.floor(absTop);     //Maths = Find the bigger of the two xnumbers and subtract the smaller one. round down and then add it to the current scene offset
+            console.log("&& yOff is " + yOff);
+            //dL.drawCircle(s.x,s.y + yOff)
+            curScene.update({shiftY: yOff});      //this will update the current scene, this time it is the xOffset
+          } else {
+            console.log("is closer to bottom of square");
+            let yOff = curOffset - Math.floor(absBot);     //Maths = Find the bigger of the two xnumbers and subtract the smaller one. round down and then add it to the current scene offset
+            console.log("&& yOff is " + yOff);
+            //dL.drawCircle(s.x,s.y - yOff)
+            curScene.update({shiftY: yOff});      //this will update the current scene, this time it is the xOffset
+              }
+      break;
+      case 2:
+      case 3:
+      console.log("Grid Scale | Drawing Layer | Pointy Hex Adjust Y")
+      let hexPValues = dL.getPointyHexPoints(s.x,s.y)
+      //console.log(hexPValues);
+      //console.log(s.x + " " + s.y);
+      let prefSide = dL.findTheBestSide(hexPValues[0],hexPValues[8],hexPValues[2],s.x)
+        if (prefSide == hexPValues[0]){
+          dL.setDatYOffset(hexPValues[15],hexPValues[17],s)
+        }
+        else if (prefSide == hexPValues[8]){
+          dL.setDatYOffset(hexPValues[5],hexPValues[7],s)
+        }
+        else {
+          dL.setDatYOffset(hexPValues[11],hexPValues[13],s)
+        }
+
+
+
+      break;
+      case 4:
+      case 5:
+        console.log("Grid Scale | Drawing Layer | Flat Hex Adjust Y")
+        let hexValues = dL.getFlatHexPoints(s.x,s.y)
+        //console.log(hexValues);
+        let absT = Math.abs(hexValues[5] - s.y);
+        let absB = Math.abs(hexValues[7] - s.y);
+        /*
+        console.log(hexValues[5]);
+        console.log(hexValues[7]);
+        console.log(s.y);
+        console.log(absT);
+        console.log(absB);
+        */
+        if (absT < absB) {
+          console.log("is closer to Top of hex");
+          let yOff = curOffset + Math.floor(absT);     //Maths = Find the bigger of the two xnumbers and subtract the smaller one. round down and then add it to the current scene offset
+          console.log("&& yOff is " + yOff);
+          //let potat = hexValues[5] + yOff;
+          //dL.drawCircle(hexValues[4], potat);
+          curScene.update({shiftY: yOff});      //this will update the current scene, this time it is the xOffset
+        } else {
+          console.log("is closer to Bottom of hex");
+          let yOff = curOffset - Math.floor(absB);     //Maths = Find the bigger of the two xnumbers and subtract the smaller one. round down and then add it to the current scene offset
+          console.log("&& xOff is " + yOff);
+          //let potat = hexValues[7] + yOff;
+          //dL.drawCircle(hexValues[6], potat);
+          curScene.update({shiftY: yOff});      //this will update the current scene, this time it is the xOffset
+        }
+      break;
+      default:
+      console.log("to pass the butter")
       }
+
+
+
 
     }
 
+    setDatYOffset(p1,p2,s){
+      let curScene = game.scenes.get(canvas.scene.data._id);
+      let curGrid = canvas.grid.size;
+      let curOffset = curScene.data.shiftY;
+      let hexPValues = dL.getPointyHexPoints(s.x,s.y)
+      let absPT = Math.abs(p1 - s.y);
+      let absPB = Math.abs(p2 - s.y);
+      //something is fucky here.
+      let magicNumber = dL.findTheBest(p1,p2,s.y,curGrid);
+      //console.log("Grid Scale | Drawing Layer | ****MAGICNUMBER****")
+      //console.log(magicNumber);
+      let center = canvas.grid.getCenter(s.x,s.y);
+      //dL.drawCircle(center[0],center[1],"center");
+      let updatedPoint = center[1] + magicNumber[1]
+      //dL.drawCircle(center[0],updatedPoint,"endpoint");
+      //dL.drawCircle(center[0],updatedPoint + magicNumber[0]);
+      let yOff = curOffset + magicNumber[0];
+      //setTimeout(function(){  curScene.update({shiftY: yOff}); },3000);
+      curScene.update({shiftY: yOff});      //this will update the current scene, this time it is the xOffset
+    }
 
-
-
+    setDatXOffset(p1,p2,s){
+      let curScene = game.scenes.get(canvas.scene.data._id);
+      let curGrid = canvas.grid.size;
+      let curOffset = curScene.data.shiftX;
+      let hexPValues = dL.getFlatHexPoints(s.x,s.y)
+      let absPT = Math.abs(p1 - s.x);
+      let absPB = Math.abs(p2 - s.x);
+      //console.log(absPT)
+      //console.log(absPB)
+      //something is fucky here.
+      let magicNumber = dL.findTheBest(p1,p2,s.x,curGrid);
+      //console.log("Grid Scale | Drawing Layer | ****MAGICNUMBER****")
+      //console.log(magicNumber);
+      let center = canvas.grid.getCenter(s.x,s.y);
+      //dL.drawCircle(center[0],center[1],"center");
+      let updatedPoint = center[0] + magicNumber[1]
+      //dL.drawCircle(updatedPoint,center[1],"endpoint");
+      //dL.drawCircle(updatedPoint + magicNumber[0], center[1]);
+      let xOff = curOffset + magicNumber[0];
+      //setTimeout(function(){  curScene.update({shiftX: xOff}); },3000);
+      curScene.update({shiftX: xOff});      //this will update the current scene, this time it is the xOffset
+    }
 
 
 
@@ -637,8 +589,8 @@ class DrawingLayer extends CanvasLayer {
         let curScene = game.scenes.get(canvas.scene.data._id);     //This gets the scene object for the current scene by asking the canvas for the current scenes ID then reutrning that to the game.scenes.get
         let gridPix = Math.floor(dL.dataCoords[3]);      //getting the grid pixel size
         //console.log("Grid Scale | Drawing Layer | ^^^^^ Current Tool ^^^^^")
-        //console.log(cB.currentTool);
-        if (cB.currentTool == "3x3") {gridPix = gridPix / 3};
+        //console.log(dL.currentTool);
+        if (dL.currentTool == "3x3") {gridPix = gridPix / 3};
         if (gridPix >= 50) {
         curScene.update({grid: gridPix});      //this will update the current scene, this time it is the grid square size
         ui.notifications.info("This is the Grid Size : " + gridPix);      //notify user of offset
@@ -648,10 +600,10 @@ class DrawingLayer extends CanvasLayer {
       }
         dL._removeListeners();
         //dL.drawChild = null;
-        if (cB.currentTool == "aGrid") {    //This is here for future work on an automatic scale/offset function. When I can get it to work right. It scales properly but offsets are wrong.
+        if (dL.currentTool == "aGrid") {    //This is here for future work on an automatic scale/offset function. When I can get it to work right. It scales properly but offsets are wrong.
           setTimeout(function(){dL.autoAdjustOffset(gridPix, curScene, adjY1, adjX1); },1000);     //after 1.5 second call setYOff
         }
-        cB.currentTool = null;
+        dL.currentTool = null;
       }
 
       /*autoAdjustOffset (gridPix, curScene) {    //this is called when automatic adjustment of X/Y with grid square is selected.
@@ -698,6 +650,220 @@ class DrawingLayer extends CanvasLayer {
         //dL.drawChild = canvas.stage.addChild(new PIXI.Graphics());
       }
 
+
+      configurePoly(i,e,t){     //this function sets up the data for drawing the square when given mouse position. Enforces drawing a square, not a rectange.
+        let sombs = canvas.scene.data.gridType
+        //console.log(sombs);
+        if (sombs > 1 && sombs < 4){
+          var height = Math.abs(i.y - e.y) * (i.y < e.y ? -1 : 1);
+          var width = Math.abs(height) * (i.x < e.x ? -1 : 1);
+          let s = [i.y > e.y ? e.y : i.y, i.x > e.x ? e.x : i.x, Math.abs(height), Math.abs(width)];
+          //console.log("Grid Scale | Draw Layer | this is configurePoly")
+          //console.log(s)
+          dL.pointyPotato(s[1],s[0],s[2],s[3])
+          t.data.coords = s, dL.dataCoords = s;
+        }
+        else {
+          var width = Math.abs(i.x - e.x) * (i.x < e.x ? -1 : 1);
+          var height = Math.abs(width) * (i.y < e.y ? -1 : 1);
+          let s = [i.x > e.x ? e.x : i.x, i.y > e.y ? e.y : i.y, Math.abs(width), Math.abs(height)];
+          //console.log("Grid Scale | Draw Layer | this is configurePoly")
+          //console.log(s)
+          dL.flatPotato(s[0],s[1],s[2],s[3])
+         t.data.coords = s, dL.dataCoords = s;
+        }
+      }
+
+      flatPotato(x,y,w,h){   // THis is the setup for a horizontal (flat) hex grid. Found the equations here (https://rechneronline.de/pi/hexagon.php)
+        let d = w;
+        let a = d/2;
+        let d2 = Math.sqrt(3) * a;
+        let eH = Math.sqrt(3)/2*a
+                            //  the following variables setup a flat hex when dragged sideways. (WHY WAS THIS SO DIFFICULT REEEEEE)
+        let pt1 = [x,y]
+        let pt2 = [x + (a/2), y - eH]
+        let pt3 = [x + (a/2) + a, y - eH]
+        let pt4 = [x + w, y]
+        let pt5 = [x + (a/2) + a, y + eH]
+        let pt6 = [x + (a/2), y + eH]
+
+        let whattf = [pt1[0],pt1[1],pt2[0],pt2[1],pt3[0],pt3[1],pt4[0],pt4[1],pt5[0],pt5[1],pt6[0],pt6[1],pt1[0],pt1[1]];
+        //console.log(whattf);
+        dL.drawChild.clear().beginFill(0x478a94, 0.3).lineStyle(1, 0x7deeff, .9, 0).drawPolygon(whattf);
+        if ( w > 50 ) {
+        dL.textSample.visible = true;
+        dL.textSample.x = x + (w/2);
+        dL.textSample.y = y;
+        dL.textSample.text  =  Math.floor(w);
+      } else {dL.textSample.visible = false;}
+      //This entire thing is not efficient. But it seems to work.
+    }
+
+
+    pointyPotato(x,y,w,h){  // THis is the setup for a vertical (pointy) hex grid.
+      let d = h;
+      let a = d/2;
+      let d2 = Math.sqrt(3) * a;
+      let eH = Math.sqrt(3)/2*a
+
+      let pt1 = [x,y]
+      let pt2 = [x + eH, y + (a/2)]
+      let pt3 = [x + eH, y + (a/2) + a]
+      let pt4 = [x , y + h]
+      let pt5 = [x - eH, y + (a/2) + a]
+      let pt6 = [x - eH, y + (a/2)]
+
+      let whattf = [pt1[0],pt1[1],pt2[0],pt2[1],pt3[0],pt3[1],pt4[0],pt4[1],pt5[0],pt5[1],pt6[0],pt6[1],pt1[0],pt1[1]];
+      //console.log(whattf);
+      dL.drawChild.clear().beginFill(0x478a94, 0.3).lineStyle(1, 0x7deeff, .9, 0).drawPolygon(whattf);
+      if ( h > 50 ) {
+      dL.textSample.visible = true;
+      dL.textSample.x = x;
+      dL.textSample.y = y + (h/2);
+      dL.textSample.text  =  Math.floor(h);
+    } else {dL.textSample.visible = false;}
+  }
+
+      setHexGrid(s) {      //this will set the grid square size then depending on the tool selected may adjust the offset in X/Y
+        let adjY1 = canvas.dimensions.height;     //needed for adjustment of x/y later.
+        let adjX1 = canvas.dimensions.width;     //needed for adjustment of x/y later.
+        dL.preGridScale = [adjX1, adjY1];           //needed for adjustment of x/y later.
+        let curScene = game.scenes.get(canvas.scene.data._id);     //This gets the scene object for the current scene by asking the canvas for the current scenes ID then reutrning that to the game.scenes.get
+        let gridPix = Math.floor(dL.dataCoords[3]);      //getting the grid pixel size
+        //console.log("Grid Scale | Drawing Layer | ^^^^^ GridPix ^^^^^")
+        //console.log(gridPix);
+        if (gridPix >= 50) {
+        curScene.update({grid: gridPix});      //this will update the current scene, this time it is the grid square size
+        ui.notifications.info("This is the Grid Size : " + gridPix);      //notify user of offset
+      } else {
+        ui.notifications.info("Grid Size must be 50px  or greater");
+        this.drawChild.clear();
+      }
+        dL._removeListeners();
+        dL.currentTool = null;
+      }
+
+      drawCircle(x,y,txt){
+      dL.drawChild.beginFill(0xe74c3c, 0.3).lineStyle(1, 0x66ff33, .9, 0).drawCircle(x,y,20);
+      dL.drawChild.beginFill(0xf1c40f, 0.3).lineStyle(1, 0x66ff33, .9, 0).drawCircle(x,y,5);
+      this.textSample.visible = true;
+      this.textSample.x = x;
+      this.textSample.y = y + 20;
+      this.textSample.text  = txt;
+      }
+
+      getFlatHexPoints(x,y){ //this is used to get the side points for a hexagon based off the returned center point so that offset can be determined.
+        let curWidth = canvas.scene.data.grid;
+        let d = curWidth;
+        let a = d/2;
+        let d2 = Math.sqrt(3) * a;
+        let eH = Math.sqrt(3)/2*a
+
+        let centerPoint = canvas.grid.getCenter(x,y)
+        let lP = [centerPoint[0] - a , centerPoint[1]];
+        let rP = [centerPoint[0] + a , centerPoint[1]];
+        let bP = [centerPoint[0] , centerPoint[1] + eH];
+        let tP = [centerPoint[0] , centerPoint[1] - eH];
+        let rTP = [centerPoint[0] + (a/2), centerPoint[1] - eH];
+        let rBP = [centerPoint[0] + (a/2), centerPoint[1] + eH];
+        let lTP = [centerPoint[0] - (a/2), centerPoint[1] - eH];
+        let lBP = [centerPoint[0] - (a/2), centerPoint[1] + eH];
+
+
+        let someshit = [lP[0],lP[1],rP[0],rP[1],tP[0],tP[1],bP[0],bP[1],centerPoint[0],centerPoint[1],rTP[0],rTP[1],rBP[0],rBP[1],lTP[0],lTP[1],lBP[0],lBP[1]];
+
+        return someshit;
+        /*
+          How this determines offsets is to get the center of the clicked in hexagon. Following this it gets the current scenes grid size.
+          Since we know the grid size and that a hexagon is a bunch of triangles we can calculate the points we need to determine the edges of the hexagon.
+          We determine a left point (lP), right point (rP), top point (tP), and bottom point (bP). Once these points are figured out. When this is called
+          the function that called it can see if the click is inside/outside of these points and adjust the grid accordingly.
+        */
+      }
+
+      getPointyHexPoints(x,y){ //this is used to get the side points for a hexagon based off the returned center point so that offset can be determined.
+        let curWidth = canvas.scene.data.grid;
+        let d = curWidth;
+        let a = d/2;
+        let d2 = Math.sqrt(3) * a;
+        let eH = Math.sqrt(3)/2*a
+
+        let centerPoint = canvas.grid.getCenter(x,y)
+        let lP = [centerPoint[0] - eH , centerPoint[1]];
+        let rP = [centerPoint[0] + eH, centerPoint[1]];
+        let bP = [centerPoint[0] , centerPoint[1] + a];
+        let tP = [centerPoint[0] , centerPoint[1] - a];
+        let rTP = [centerPoint[0] + eH, centerPoint[1] - (a/2)];
+        let rBP = [centerPoint[0] + eH, centerPoint[1] + (a/2)];
+        let lTP = [centerPoint[0] + eH, centerPoint[1] - (a/2)];
+        let lBP = [centerPoint[0] + eH, centerPoint[1] + (a/2)];
+
+
+
+        let someshit = [lP[0],lP[1],rP[0],rP[1],tP[0],tP[1],bP[0],bP[1],centerPoint[0],centerPoint[1],rTP[0],rTP[1],rBP[0],rBP[1],lTP[0],lTP[1],lBP[0],lBP[1]];
+
+        return someshit;
+        //tdlr need points to determine shift distance (see above ~731)
+      }
+
+
+      findTheBestSide(p1,p2,p3,cP){
+        //console.log("Grid Scale | Drawing Layer | ^^^^^ Choose Best side ^^^^^");
+        //console.log(p1 + " " + p2 + " " + p3 + " " + cP)
+        if (cP < p1 + 5 && cP > p1 - 5){
+        //  console.log("left (top) most point")
+          return p1
+        }
+        else if(cP < p2 + 5 && cP > p2 - 5){
+        //  console.log("Middle (middle) most point")
+          return p2
+        }
+        else {
+        //  console.log("right (bottom) most point")
+          return p3
+        }
+
+      }
+
+
+      findTheBest(n1,n2,clickN,gS){
+      //  console.log("this is clickN " + clickN)
+      //  console.log("this is n1 " + n1)
+      //  console.log("this is n2 " + n2)
+        let arry = null;
+        let abs1 = n1 - clickN;
+        let abs2 = n2 - clickN;
+      //  console.log("this is abs1 " + abs1)
+      //  console.log("this is abs2 " + abs2)
+        if (Math.abs(abs1) < Math.abs(abs2)) {
+          console.log("Grid Scale | Drawing Layer | ^^^^^ ChoseABS1 ^^^^^");
+          if (n1 < clickN){
+            //console.log("Grid Scale | Drawing Layer | ^^^^^ N1 was LT Click ^^^^^");
+            arry = [Math.abs(abs1),-Math.abs(gS/2)]
+            return arry;
+          }
+          else{
+            //console.log("Grid Scale | Drawing Layer | ^^^^^ N1 was GT Click ^^^^^");
+            arry = [-Math.abs(abs1),-Math.abs(gS/2)]
+            return arry;
+          }
+        }
+        else {
+          //console.log("Grid Scale | Drawing Layer | ^^^^^ ChoseABS2 ^^^^^");
+          if (n2 < clickN){
+            //console.log("Grid Scale | Drawing Layer | ^^^^^ N2 was LT Click ^^^^^");
+            arry = [Math.abs(abs2),Math.abs(gS/2)]
+            return arry;
+          }
+          else{
+            //console.log("Grid Scale | Drawing Layer | ^^^^^ N2 was GT Click ^^^^^");
+            arry = [-Math.abs(abs2),Math.abs(gS/2)]
+            return arry;
+          }
+        }
+
+      }
+
       newHookTest(){
       Hooks.on('getSceneControlButtons', controls => {
         //console.log(controls);
@@ -713,16 +879,9 @@ class DrawingLayer extends CanvasLayer {
 
 //// Last bit to render and set function definitos
 
-let cB = new CustomButtons();
 let dL = new DrawingLayer();
 
 dL.setButtons();
 dL.newHookTest();
-//cB.modifyiList();
-//dL.defineButtons();
-//dL.defineButtons();
-//dL.hookActorList();
-//dL.hookCustomButtons();
-
 
 console.log("Grid Scale | ** Finished Loading **");
