@@ -14,7 +14,7 @@ To install a module, follow these instructions:
 
 Once the plugin is loaded a new wrench icon will appear below the main tool selection.
 
-Click on this icon and you will be presented with Sex more icons. (Imgur Album - https://imgur.com/a/1UZUjkT)
+Click on this icon and you will be presented with Six more icons. (Imgur Album - https://imgur.com/a/1UZUjkT)
 
 1. Reset Grid - This will set the grid to 100 pixel square with 0 X/Y offset. It also changes the grid color to pink to make it easier to see for setup. Now works with Hex Grids (**Warning spastic GIFs below**)
 ![Reset Grid](https://i.imgur.com/JHV0CjI.gif)
