@@ -14,29 +14,46 @@ To install a module, follow these instructions:
 
 Once the plugin is loaded a new wrench icon will appear below the main tool selection.
 
-Click on this icon and you will be presented with five more icons. (Imgur Album - https://imgur.com/a/zyBWI0M)
+Click on this icon and you will be presented with Sex more icons. (Imgur Album - https://imgur.com/a/1UZUjkT)
 
-1. Reset Grid - This will set the grid to 100 pixel square with 0 X/Y offset. It also changes the grid color to pink to make it easier to see for setup.
-![Reset Grid](https://i.imgur.com/TYYH8KP.gif)
+1. Reset Grid - This will set the grid to 100 pixel square with 0 X/Y offset. It also changes the grid color to pink to make it easier to see for setup. Now works with Hex Grids (**Warning spastic GIFs below**)
+![Reset Grid](https://i.imgur.com/JHV0CjI.gif)
+![Reset GridPh](https://i.imgur.com/e77hRkKf.gif)
+![Reset GridFG](https://i.imgur.com/mu4DrYD.gif)
 
 2. Auto Adjust Grid - **||Currently Disabled due to issues||** This will let you draw a square on the map then have the grid size and X/Y offsets set to match the drawn square.
 ![Auto Adjust Grid](https://i.imgur.com/tbM3zGl.gif)
 
 3. Set GridSquare Size - This will let you draw a square on the map then have the grid size set to match the drawn square. No offset is applied with this and should be applied manually.
-![Adjust Grid](https://i.imgur.com/6SaU3Yo.gif)
+![Adjust Square Grid](https://i.imgur.com/q6ouG2k.gif)
 
-4. Adjust X - When this is selected it will let you move the grid along the X plane. Clicking the button then clicking on a horizontal line in one of your grid squares will adjust the grid to line up with that point.
-![Adjust X](https://i.imgur.com/4t38xiM.gif)
+4. Adjust X - When this is selected it will let you move the grid along the X plane. Clicking the button then clicking on a vertical line in one of your grid squares will adjust the grid to line up with that point. Now works with hexes!!
+![Adjust X](https://i.imgur.com/fadExiq.gif)
+![Adjust X Fh](https://i.imgur.com/vowtY2y.gif)
+![Adjust X Ph](https://i.imgur.com/KjdrXdY.gif)
 
-5. Adjust Y - When this is selected it will let you move the grid along the Y plane. Clicking the button then clicking on a horizontal line in one of your grid squares will adjust the grid to line up with that point.
-![Adjust Y](https://i.imgur.com/M6C53oa.gif)
+5. Adjust Y - When this is selected it will let you move the grid along the Y plane. Clicking the button then clicking on a horizontal line in one of your grid squares will adjust the grid to line up with that point. Also now works with hexes!!
+![Adjust Y](https://i.imgur.com/2c41haj.gif)
+![Adjust Y Fh](https://i.imgur.com/td18AEm.gif)
+![Adjust Y Ph](https://i.imgur.com/VqHPns4.gif)
 
+6. Set GridSquare with a 3x3 Square - Draw a 3x3 grid square on the map then have the grid size set to match the drawn square. No offset is applied with this and should be applied manually.
+![Adjust 3x3 Square Grid](https://i.imgur.com/kFdPVaa.gif)
+
+7. Set GridSquare with a Hexagon - Draw hexagon on the map then have the grid size set to match the hex. No offset is applied with this and should be applied manually. Flat/Horizontal Hexes should be drawn left -> right from the midpoint, while Pointed/Vertical Hexes should be drawn from the top down.
+![Draw Hex Fh](https://i.imgur.com/JuPqFoQ.gif)
+![Draw Hex Ph](https://i.imgur.com/2vCRqXT.gif)
 
 It may not be perfect but it will be close. 
 
 ### Features in planning (maybe?)
 
 1. Fix auto-grid - Need to figure out how to deal with the scenes size changing when grid sizes change as this throws off the original click location.
+
+### Changes in version - 0.0.8
+
+1. Added the ability to scale the grid with Hexes and adjust the X/Y offsets using exsisting tools. 
+2. Updated Readme to show new buttons/layout.
 
 ### Changes in version - 0.0.7
 
