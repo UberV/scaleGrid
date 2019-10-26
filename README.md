@@ -18,7 +18,7 @@ Click on this icon and you will be presented with Sex more icons. (Imgur Album -
 
 1. Reset Grid - This will set the grid to 100 pixel square with 0 X/Y offset. It also changes the grid color to pink to make it easier to see for setup. Now works with Hex Grids (**Warning spastic GIFs below**)
 ![Reset Grid](https://i.imgur.com/JHV0CjI.gif)
-![Reset GridPh](https://i.imgur.com/e77hRkKf.gif)
+![Reset GridPh](https://i.imgur.com/e77hRkK.gif)
 ![Reset GridFG](https://i.imgur.com/mu4DrYD.gif)
 
 2. Auto Adjust Grid - **||Currently Disabled due to issues||** This will let you draw a square on the map then have the grid size and X/Y offsets set to match the drawn square.
