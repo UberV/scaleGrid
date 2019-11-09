@@ -8,5 +8,5 @@
   "styles": ["./gridScale.css"],
   "packs": []
   "manifest": "https://github.com/UberV/scaleGrid/blob/master/module.json",
-  "download": "hold that think"
+  "download": "https://github.com/UberV/scaleGrid/archive/master.zip"
 }
