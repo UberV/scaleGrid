@@ -7,6 +7,6 @@
   "scripts": ["./gridScale.js"],
   "styles": ["./gridScale.css"],
   "packs": []
-  "manifest": "hold that think",
+  "manifest": "https://github.com/UberV/scaleGrid/blob/master/module.json",
   "download": "hold that think"
 }
