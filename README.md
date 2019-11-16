@@ -2,7 +2,7 @@
 
 ## Compatibility
 
-Requires FVTT version 0.3.9 or higher
+Requires FVTT version 0.4.0 or higher
 
 To install a module, follow these instructions:
 
