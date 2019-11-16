@@ -6,7 +6,7 @@
 	"author": "UberV",
 	"scripts": ["./gridScale.js"],
 	"styles": ["./gridScale.css"],
-	"packs": [nopacks],
+	"packs": [],
 	"minimumCoreVersion": "0.4.0",
     "url": "https://github.com/UberV/scaleGrid/",
     "manifest": "https://raw.githubusercontent.com/UberV/scaleGrid/master/module.json",
