@@ -8,6 +8,7 @@ To install a module, follow these instructions:
 
 1. Download the zip file
 2. Extract the included folder to `public/modules` in your Foundry Virtual Tabletop installation folder.
+3. Make sure the extracted folder is named "scaleGrid" and not "scaleGrid-master". Rename it if necesarry.
 3. Restart Foundry Virtual Tabletop. 
 
 ## How to Use the plugin
