@@ -8,6 +8,7 @@
 	"styles": ["./gridScale.css"],
 	"packs": [],
 	"minimumCoreVersion": "0.4.4",
+	"compatibleCoreVersion": "0.5.5",
     "url": "https://github.com/UberV/scaleGrid/",
     "manifest": "https://raw.githubusercontent.com/UberV/scaleGrid/master/module.json",
     "download": "https://github.com/UberV/scaleGrid/archive/master.zip"
