@@ -267,7 +267,7 @@ class ScaleGridLayer extends CanvasLayer {
     let t = canvas.stage;
     let f = t._events;
     //console.log(f);
-    t.off("mousedown", canvas._onMouseDown);
+    t.off("mousedown", canvas._onClickLeft);
   }
 
   /**
@@ -278,7 +278,7 @@ class ScaleGridLayer extends CanvasLayer {
     let t = canvas.stage;
     let f = t._events;
     //console.log(f);
-    t.on("mousedown", canvas._onMouseDown);
+    t.on("mousedown", canvas._onClickLeft);
   }
 
 
