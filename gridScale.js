@@ -1155,22 +1155,23 @@ caclByXnY(x,y) {
 
 
   /**
-   *
+   * Initialize the ScaleGridLayer. Attach the button to the controls, draw the square, and the draw text.
    */
-  newHookTest(){
+  initialize() {
     Hooks.on('getSceneControlButtons', controls => {
-      //console.log(controls);
       console.log("Grid Scale | Testing User role = " + game.user.data.role)
       if (game.user.data.role == 4) {
-      controls.push(sgLayer.newButtons);
-      //console.log(controls);
+        controls.push(sgLayer.newButtons);
+      }
+    });
+    // only draw objects when canvas is ready
+    Hooks.on('canvasReady', _canvas => {
       sgLayer.setDrawChild();
       sgLayer.drawSomeText();
-    };
-    });
+    })
   }
 
-}     //ends extendedCanvas class
+} // ends extendedCanvas class
 
 
 //// Last bit to render and set function definitos
@@ -1178,7 +1179,7 @@ caclByXnY(x,y) {
 let sgLayer = new ScaleGridLayer();
 
 sgLayer.setButtons();
-sgLayer.newHookTest();
+sgLayer.initialize();
 
 // Add a releaseAll function to the GridLayer class so it can pass through the Canvas.tearDown method -- to be fixed in a future Foundry release
 GridLayer.prototype.releaseAll = function() {};
