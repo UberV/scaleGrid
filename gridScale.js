@@ -160,14 +160,14 @@ class ScaleGridLayer extends CanvasLayer {
    */
   gridonMouseDown(e) {
     sgLayer.testVar2 = e;
-    console.log(e);
-    console.log ("HOW DO YOU DO THIS SHIT AGAIN!!!!!!!!!!!!!!!")
+   //console.log(e);
+    //#console.log ("HOW DO YOU DO THIS SHIT AGAIN!!!!!!!!!!!!!!!")
 //    if (e.data.button != 0) return;
     //console.log(sgLayer._getMousePos());
     let tDI = sgLayer._getMousePos(e);
     //sgLayer.testVar2 = e;
-    console.log(e);
-    console.log(tDI);
+    //console.log(e);
+    //console.log(tDI);
     //console.log
     //sgLayer.testVar1 = tDI;
     switch (sgLayer.currentTool){     //this switch statement checks the value of the active tool from gridControls then picks the right function on mouse click.
@@ -1159,7 +1159,7 @@ caclByXnY(x,y) {
    */
   initialize() {
     Hooks.on('getSceneControlButtons', controls => {
-      console.log("Grid Scale | Testing User role = " + game.user.data.role)
+      //console.log("Grid Scale | Testing User role = " + game.user.data.role)
       if (game.user.data.role == 4) {
         controls.push(sgLayer.newButtons);
       }
