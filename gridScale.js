@@ -941,6 +941,7 @@ caclByXnY(x,y) {
     //dL.drawCircle(center[0],updatedPoint + magicNumber[0]);
     let yOff = curOffset + magicNumber[0];
     //setTimeout(function(){  curScene.update({shiftY: yOff}); },3000);
+    yOff = Math.round(yOff);
     await curScene.update({shiftY: yOff});      //this will update the current scene, this time it is the xOffset
     sgLayer.setGrid("Y Offset",yOff);
   }
@@ -1067,7 +1068,7 @@ caclByXnY(x,y) {
       this.drawChild.clear();
       await curScene.update({grid: gridPix});      //this will update the current scene, this time it is the grid square size
       sgLayer.garbageDialog("hex scale", gridPix);
-    } 
+    }
     if (gridPix < 50 ) {
       sgLayer._removeListeners();
       //ui.notifications.info("Grid Size must be 50px  or greater");
@@ -1151,14 +1152,14 @@ caclByXnY(x,y) {
       buttons: {
           yes: {
               icon: `<i class="fas fa-check"></i>`,
-              label: "Reset",
+              label: "Yes",
               callback: () => {
                 sgLayer.adjustMapScale(gridPix);
               }
           },
           no: {
               icon: `<i class="fas fa-times"></i>`,
-              label: "Cancel"
+              label: "No"
           }
       },
       default: "no"
