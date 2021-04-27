@@ -241,11 +241,11 @@ class ScaleGridLayer extends CanvasLayer {
       gridonMouseUp(t) {
         //console.log("Mouse Up?")
         let tDI = sgLayer._getMousePos();
+        sgLayer._removeListeners();
         if (sgLayer.needsDrawn == true) {      //this triggers after finishing drawing the square. Resets some things, clears the square and switches back on the game listeners.
           //dL.needsDrawn = false, dL.currentTool = null, dL.drawChild.clear(), dL.enableGameListeners() ,dL.setGrid();
           if (sgLayer.currentTool == "Poly") {
             sgLayer.needsDrawn = false;
-            sgLayer._removeListeners();
             sgLayer.setHexGrid();
             sgLayer.textSample.visible = false;
             sgLayer.testVar1 = null;
@@ -915,6 +915,14 @@ caclByXnY(x,y) {
     }
   }
 
+  async adjustMapScale(gridPix) {
+    let curScene = game.scenes.get(canvas.scene.data._id);
+    let adjustment = 50 / gridPix;
+    let heightAdjust = Math.round(canvas.scene.data.height * adjustment)
+    let widthAdjust = Math.round(canvas.scene.data.width * adjustment)
+    await curScene.update({grid: 50, width: widthAdjust, height: heightAdjust});
+  }
+
   async setDatYOffset(p1,p2,s){
     let curScene = game.scenes.get(canvas.scene.data._id);
     let curGrid = canvas.grid.size;
@@ -948,8 +956,8 @@ caclByXnY(x,y) {
     //console.log(absPB)
     //something is fucky here.
     let magicNumber = sgLayer.findTheBest(p1,p2,s.x,curGrid);
-    //console.log("Grid Scale | Drawing Layer | ****MAGICNUMBER****")
-    //console.log(magicNumber);
+    console.log("Grid Scale | Drawing Layer | ****MAGICNUMBER****")
+    console.log(magicNumber);
     let center = canvas.grid.getCenter(s.x,s.y);
     //dL.drawCircle(center[0],center[1],"center");
     let updatedPoint = center[0] + magicNumber[1]
@@ -957,6 +965,9 @@ caclByXnY(x,y) {
     //dL.drawCircle(updatedPoint + magicNumber[0], center[1]);
     let xOff = curOffset + magicNumber[0];
     //setTimeout(function(){  curScene.update({shiftX: xOff}); },3000);
+    console.log("This is the xOff Variable");
+    console.log(xOff);
+    xOff = Math.round(xOff);
     await curScene.update({shiftX: xOff});      //this will update the current scene, this time it is the xOffset
     sgLayer.setGrid("X Offset", xOff);
   }
@@ -984,7 +995,7 @@ caclByXnY(x,y) {
     sgLayer.preGridScale = [adjX1, adjY1];           //needed for adjustment of x/y later.
     let curScene = game.scenes.get(canvas.scene.data._id);     //This gets the scene object for the current scene by asking the canvas for the current scenes ID then reutrning that to the game.scenes.get
     //console.log("Grid Scale | Drawing Layer | ^^^^^ this is datacoords ^^^^^")
-    //console.log(sgLayer.dataCoords);
+    console.log(sgLayer.dataCoords);
     let gridPix = Math.floor(sgLayer.dataCoords[3]);      //getting the grid pixel size
     //console.log("Grid Scale | Drawing Layer | ^^^^^ Current Tool ^^^^^")
     //console.log(dL.currentTool);
@@ -994,9 +1005,12 @@ caclByXnY(x,y) {
       //ui.notifications.info("This is the Grid Size : " + gridPix);      //notify user of offset
       await curScene.update({grid: gridPix});      //this will update the current scene, this time it is the grid square size
       sgLayer.garbageDialog("scale", gridPix);
-    } else {
-      ui.notifications.info("Grid Size must be 50px  or greater");
+    }
+    if (gridPix < 50 ) {
+      sgLayer._removeListeners();
+      //ui.notifications.info("Grid Size must be 50px  or greater");
       this.drawChild.clear();
+      sgLayer.scaleAdjustDialog(gridPix);
     }
     sgLayer._removeListeners();
     //dL.drawChild = null;
@@ -1053,9 +1067,12 @@ caclByXnY(x,y) {
       this.drawChild.clear();
       await curScene.update({grid: gridPix});      //this will update the current scene, this time it is the grid square size
       sgLayer.garbageDialog("hex scale", gridPix);
-    } else {
-      ui.notifications.info("Grid Size must be 50px  or greater");
+    } 
+    if (gridPix < 50 ) {
+      sgLayer._removeListeners();
+      //ui.notifications.info("Grid Size must be 50px  or greater");
       this.drawChild.clear();
+      sgLayer.scaleAdjustDialog(gridPix);
     }
     sgLayer._removeListeners();
     sgLayer.currentTool = null;
@@ -1118,6 +1135,38 @@ caclByXnY(x,y) {
 
     confirmDialog.render(true);
   }
+
+  /**
+   * Renders a dialog to confirm the user wants to reset the grid
+   * @param {*} event  the event that spawned the dialog
+   */
+  scaleAdjustDialog(gridPix) {
+    let start = "The map grid is ";
+    let end = start.concat(gridPix,", do you want to adjust the map scale to bring it up to meet the minimum 50px?</p>");
+    const confirmDialog = new Dialog({
+      height: 800,
+      width: 800,
+      title: "Adjust Map Scale?",
+      content: end,
+      buttons: {
+          yes: {
+              icon: `<i class="fas fa-check"></i>`,
+              label: "Reset",
+              callback: () => {
+                sgLayer.adjustMapScale(gridPix);
+              }
+          },
+          no: {
+              icon: `<i class="fas fa-times"></i>`,
+              label: "Cancel"
+          }
+      },
+      default: "no"
+    });
+
+    confirmDialog.render(true);
+  }
+
 
 
   /**
