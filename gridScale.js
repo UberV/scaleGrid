@@ -943,7 +943,7 @@ caclByXnY(x,y) {
     //setTimeout(function(){  curScene.update({shiftY: yOff}); },3000);
     yOff = Math.round(yOff);
     await curScene.update({shiftY: yOff});      //this will update the current scene, this time it is the xOffset
-    sgLayer.setGrid("Y Offset",yOff);
+    sgLayer.garbageDialog("Y Offset",yOff);
   }
 
   async setDatXOffset(p1,p2,s){
@@ -970,7 +970,7 @@ caclByXnY(x,y) {
     console.log(xOff);
     xOff = Math.round(xOff);
     await curScene.update({shiftX: xOff});      //this will update the current scene, this time it is the xOffset
-    sgLayer.setGrid("X Offset", xOff);
+    sgLayer.garbageDialog("X Offset", xOff);
   }
 
 
