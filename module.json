@@ -1,8 +1,8 @@
 {
 	"name": "scaleGrid",
 	"title": "Grid Scale Menu",
-	"description": "This should add some buttons to modify grids to the canvas. Updated for 0.7.8",
-	"version": "0.0.13",
+	"description": "This should add some buttons to modify grids to the canvas. Updated for 0.8.7",
+	"version": "0.0.14",
 	"author": "UberV",
 	"scripts": ["./gridScale.js"],
 	"styles": ["./gridScale.css"],
