@@ -997,11 +997,12 @@ caclByXnY(x,y) {
     let curScene = game.scenes.get(canvas.scene.data._id);     //This gets the scene object for the current scene by asking the canvas for the current scenes ID then reutrning that to the game.scenes.get
     //console.log("Grid Scale | Drawing Layer | ^^^^^ this is datacoords ^^^^^")
     console.log(sgLayer.dataCoords);
-    let gridPix = Math.floor(sgLayer.dataCoords[3]);      //getting the grid pixel size
+    let gridPix = sgLayer.dataCoords[3];      //getting the grid pixel size
     //console.log("Grid Scale | Drawing Layer | ^^^^^ Current Tool ^^^^^")
     //console.log(dL.currentTool);
     //console.log(gridPix);
     if (sgLayer.currentTool == "3x3") gridPix = gridPix / 3;
+    gridPix = Math.round(gridPix);
     if (gridPix >= 50) {
       //ui.notifications.info("This is the Grid Size : " + gridPix);      //notify user of offset
       await curScene.update({grid: gridPix});      //this will update the current scene, this time it is the grid square size
@@ -1060,7 +1061,7 @@ caclByXnY(x,y) {
     let adjX1 = canvas.dimensions.width;     //needed for adjustment of x/y later.
     sgLayer.preGridScale = [adjX1, adjY1];           //needed for adjustment of x/y later.
     let curScene = game.scenes.get(canvas.scene.data._id);     //This gets the scene object for the current scene by asking the canvas for the current scenes ID then reutrning that to the game.scenes.get
-    let gridPix = Math.floor(sgLayer.dataCoords[3]);      //getting the grid pixel size
+    let gridPix = Math.round(sgLayer.dataCoords[3]);      //getting the grid pixel size
     //console.log("Grid Scale | Drawing Layer | ^^^^^ GridPix ^^^^^")
     //console.log(gridPix);
     if (gridPix >= 50) {
