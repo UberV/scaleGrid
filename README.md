@@ -94,4 +94,4 @@ MIA - We dont talk about this version
 
 This is my first foray into working with Javascript/HTML/jQuery/CSS. So its rough but I hope to polish it up. Any suggestions on code/cleanup/what can be done better just message me on discord!
 
-### Big thanks to Atropos, Felix ( aka sly3r86 ), Errational, and xmclark for their help and the code which was totally not butchered to make this.
+### Big thanks to Atropos, Felix ( aka sly3r86 ), Errational, xmclark, and Iron-E for their help and the code which was totally not butchered to make this.
