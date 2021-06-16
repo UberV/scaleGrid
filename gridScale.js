@@ -43,7 +43,7 @@ class ScaleGridLayer extends CanvasLayer {
       activeTool: "DrawSquare",
       name: "grid",
       icon: "fas fa-wrench",
-      layer: "GridLayer",
+      layer: "grid",
       title: "Grid Controls",
       tools: [
 
